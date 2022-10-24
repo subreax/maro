@@ -1,6 +1,7 @@
 <script>
-  
+    import Textfield from "@smui/textfield";
+
+    let valueA = "";
 </script>
 
-
-<h2>Hello world</h2>
+<Textfield variant="outlined" bind:value={valueA} label="E-mail" />
