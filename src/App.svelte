@@ -12,15 +12,18 @@
 </script>
 
 <body>
-    <div class="conteiner">
+    <form class="container">
         <figure class="icon">
             <img src="../public/vdnh_icon.jpg" alt="">
         </figure>
+        
+        
+        <Textfield class="auth-field" variant="outlined" bind:value={email} label="E-mail"/>
     
-        <Textfield variant="outlined" bind:value={email} label="E-mail" />
-    
-        <Textfield variant="outlined" bind:value={password} label="Пароль" />
-    
+        <Textfield variant="outlined" bind:value={password} label="Пароль"/>
+        
+        
+
         <Label><a href="">Забыли пароль?</a></Label>
     
         <FormField>
@@ -37,12 +40,17 @@
         <Button variant="raised" class="button-shaped-round">
             <Label>Регистрация</Label>
         </Button>
-    </div>
+    </form>
 </body>
 
 
 <style>
-    .conteiner {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
         display: flex;
         flex-direction: column;
         margin: 0 auto;
@@ -59,7 +67,7 @@
         margin-bottom: 62px;
     }
 
-    .auth_field {
-        padding: 10px 0 10px 0;
+    .auth-field {
+        margin-top: 15px;
     }
 </style>
