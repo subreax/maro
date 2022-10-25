@@ -12,32 +12,48 @@
 </script>
 
 <body>
+    
     <form class="container">
         <figure class="icon">
             <img src="../public/vdnh_icon.jpg" alt="">
         </figure>
         
-        
-        <Textfield class="auth-field" variant="outlined" bind:value={email} label="E-mail"/>
+        <div class="auth-field">
+            <Textfield variant="outlined" bind:value={email} label="E-mail"/>
+        </div>
     
-        <Textfield variant="outlined" bind:value={password} label="Пароль"/>
+        <div class="auth-field">
+            <Textfield variant="outlined" bind:value={password} label="Пароль"/>
+        </div>
         
+        <div class="forgot-password">
+            <Label><a href="">Забыли пароль?</a></Label>
+        </div>
+    
+        <div class="remember-me">
+            <FormField>
+                <Checkbox bind:checked />
+                <span slot="label">Запомнить меня</span>
+            </FormField>
+        </div>
         
-
-        <Label><a href="">Забыли пароль?</a></Label>
     
-        <FormField>
-            <Checkbox bind:checked />
-            <span slot="label">Запомнить меня</span>
-        </FormField>
-    
-        <Button variant="raised" class="button-shaped-round">
+        <Button 
+            variant="raised" 
+            class="button-shaped-round"
+            style="background: #E22C38;">
             <Label>Войти</Label>
         </Button>
     
-        <Label>или</Label>
-    
-        <Button variant="raised" class="button-shaped-round">
+        <div>
+            <h2><span>или</span></h2>
+        </div>
+
+        
+        <Button 
+            variant="raised" 
+            class="button-shaped-round"
+            style="background: #E22C38;">
             <Label>Регистрация</Label>
         </Button>
     </form>
@@ -51,12 +67,12 @@
     }
 
     .container {
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         margin: 0 auto;
         padding: 110px;
         max-width: 762px;
-
     }
 
     .icon {
@@ -68,6 +84,32 @@
     }
 
     .auth-field {
-        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 40px;
     }
+
+    .forgot-password {
+        margin-bottom: 10px;
+    }
+
+    .remember-me {
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        margin: 20px 0 20px; 
+        text-align: center; 
+        border-bottom: 1px solid #000; 
+        line-height: 0.1em;
+
+        font-weight: 400;
+    } 
+
+    h2 span { 
+        background:#fff; 
+        padding-top: 10px;
+        padding-bottom: 10px; 
+    }
+
 </style>
