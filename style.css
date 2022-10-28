@@ -4,3 +4,77 @@ body {
     padding: 0;
 }
 
+p, h1, h2, h3, h4, h5, h6 {
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 1rem;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    color: #E22C38;
+    background: transparent;
+    padding: 0.71rem 1.43rem;
+    border-radius: 10px;
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background: #eee;
+}
+
+.btn__raised {
+    color: white;
+    background: #E22C38;
+}
+
+.btn__raised:hover {
+    background: #b2212b;
+}
+
+.btn-group button {
+    float: left;
+    border-radius: 0;
+}
+
+.btn-group button:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.btn-group button:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+.btn__toggle {
+    background: white;
+}
+
+.btn__toggle.btn__toggle--active {
+    color: white;
+    background: #E22C38;
+}
+
+
+.btn__icon {
+    padding: 0.71rem;
+}
+
+.btn--stretch {
+    width: 100%;
+}
+
+
+
+
+.xlist-item {
+    padding: 1em 0; /*todo*/
+}

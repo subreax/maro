@@ -2,6 +2,7 @@
     import "mapbox-gl/dist/mapbox-gl.css";
     import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
     import { onMount } from "svelte";
+    import PathTuningComponent from "../components/PathTuningComponent.svelte";
 
     mapboxgl.accessToken =
         "pk.eyJ1IjoicmVmcmlnZXJhdG9yMmsiLCJhIjoiY2w5aXUwOGNzMDM2NDNvbzdjdGkzeWR0biJ9.Hbm67L4hmYTKaHYBXXD3DQ";
@@ -171,6 +172,12 @@
     }
 </script>
 
+
+<div class="path-tuning-component">
+    <PathTuningComponent />
+</div>
+
+
 <div id="map" />
 
 <style>
@@ -179,5 +186,12 @@
         top: 0;
         bottom: 0;
         width: 100%;
+    }
+
+    .path-tuning-component {
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        z-index: 10;
     }
 </style>

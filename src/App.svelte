@@ -1,7 +1,7 @@
 <script>
     import {Router, Link, Route} from "svelte-routing";
     import AuthRoute from "./routes/AuthRoute.svelte";
-    import HomeRoute from "./routes/HomeRoute.svelte";
+    import ExploreRoute from "./routes/ExploreRoute.svelte";
     import MapRoute from "./routes/MapRoute.svelte";
 
     export let url = "";
@@ -9,7 +9,7 @@
 
 <Router url="{url}">
     <nav>
-        <Link to="/"><span>Home</span></Link>
+        <Link to="/"><span>Explore</span></Link>
         <Link to="auth"><span>Auth</span></Link>
         <Link to="map"><span>Map</span></Link>
     </nav>
@@ -17,7 +17,7 @@
     <div>
         <Route path="auth" component={AuthRoute} />
         <Route path="map" component={MapRoute} />
-        <Route path="/" component={HomeRoute} />
+        <Route path="/" component={ExploreRoute} />
     </div>
 </Router>
 
