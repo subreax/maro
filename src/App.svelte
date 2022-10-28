@@ -1,15 +1,16 @@
 <script>
     // @ts-ignore
-    import Checkbox from "@smui/checkbox";
     // @ts-ignore
     import FormField from "@smui/form-field";
     import Button from "@smui/button";
     import { Label } from "@smui/common";
-    import Textfield from "./Textfield.svelte";
+    import Textfield from "./components/Textfield.svelte";
+    import PasswordField from "./components/PasswordField.svelte";
+    import Checkbox from "./components/Checkbox.svelte";
 
-    let remember = false;
-    let email = "";
-    let password = "";
+    let remember;
+    let email;
+    let password;
 
     function signInClicked() {
         // вход кликнут
@@ -22,29 +23,27 @@
 
 <form class="container">
     <figure class="icon">
-        <img src="../public/vdnh_icon.jpg" alt="" />
+        <img src="../assets/Logo.svg" alt="" />
     </figure>
+ 
+    <div class="fields">
+        <div class="auth-field">
+            <Textfield type="text" labelContent={"Email"} bind:inputContent={email}/>
+        </div>
+    
+        <div class="auth-field">
+            <PasswordField labelContent={"Пароль"} bind:inputContent={password}/>
+        </div>
+    
+        <div class="group">
+                <Checkbox checkboxContent="Запомнить меня" bind:status={remember}/>
 
-    <div class="auth-field">
-        <Textfield bind:value={email} />
+                <a href="" class="forgot-password">Забыли пароль?</a>
+        </div>
     </div>
-
-    <div class="auth-field">
-        <!-- <Textfield variant="outlined" bind:value={password} label="Пароль"/> -->
-    </div>
-
-    <div class="forgot-password">
-        <Label><a href="">Забыли пароль?</a></Label>
-    </div>
-
-    <div class="remember-me">
-        <FormField>
-            <Checkbox bind:remember />
-            <span slot="label">Запомнить меня</span>
-        </FormField>
-    </div>
-
-    <Button
+    
+    <div class="buttons">
+        <Button
         variant="raised"
         class="button-shaped-round"
         on:click={(e) => {
@@ -69,6 +68,8 @@
     >
         <Label>Регистрация</Label>
     </Button>
+    </div>
+    
 </form>
 
 <style>
@@ -110,14 +111,23 @@
         padding-right: 20px;
     }
 
-    .forgot-password {
-        margin-bottom: 10px;
+    .group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 10px;
+        padding: 0 57px 0 57px;
     }
 
-    .remember-me {
-        margin-bottom: 10px;
-        position: relative;
-        left: -10px;
+    .forgot-password{
+        text-decoration: none;
+        color: #E22C38;
+    }
+
+    .buttons {
+        margin-top: 40px;
     }
 
     .title {
