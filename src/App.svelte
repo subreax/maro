@@ -1,9 +1,9 @@
 <script>
-    import Textfield from "@smui/textfield";
     import Checkbox from '@smui/checkbox';
     import FormField from '@smui/form-field';
     import Button from '@smui/button';
     import { Label } from '@smui/common';
+    import Textfield from './Textfield.svelte';
 
     
     let checked = false;
@@ -19,11 +19,11 @@
         </figure>
         
         <div class="auth-field">
-            <Textfield variant="outlined" bind:value={email} label="E-mail"/>
+            <Textfield bind:value={email}/>
         </div>
-    
+        
         <div class="auth-field">
-            <Textfield variant="outlined" bind:value={password} label="Пароль"/>
+            <!-- <Textfield variant="outlined" bind:value={password} label="Пароль"/> -->
         </div>
         
         <div class="forgot-password">
@@ -45,8 +45,10 @@
             <Label>Войти</Label>
         </Button>
     
-        <div>
-            <h2><span>или</span></h2>
+        <div class="title">
+            <span>
+                или
+            </span>
         </div>
 
         
@@ -61,9 +63,10 @@
 
 
 <style>
-    * {
+    *, *::before, *::after {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
     }
 
     .container {
@@ -87,6 +90,7 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 40px;
+        padding-right: 20px;
     }
 
     .forgot-password {
@@ -95,21 +99,42 @@
 
     .remember-me {
         margin-bottom: 10px;
+        position: relative;
+        left: -10px;
     }
 
-    h2 {
-        margin: 20px 0 20px; 
-        text-align: center; 
-        border-bottom: 1px solid #000; 
-        line-height: 0.1em;
+    .title {
+        overflow: hidden;
+        text-align: center;
+        font-size: 20px;
+    }
 
-        font-weight: 400;
-    } 
+    .title span {
+    /* Стили тега обертки для заголовков 
+    ** в несколько строк */
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    .title:before,
+    .title:after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        height: 1px;
+        background-color: #262626;
+        position: relative;
+    }
 
-    h2 span { 
-        background:#fff; 
-        padding-top: 10px;
-        padding-bottom: 10px; 
+    .title::before {
+        margin-left: -100%;
+        left: -14px;
+    }
+
+    .title::after {
+        margin-right: -100%;
+        right: -14px;
     }
 
 </style>
