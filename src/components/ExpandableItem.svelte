@@ -23,7 +23,7 @@
 
 </script>
 
-<div class="component">
+<div>
     <p class="title" on:click={() => onClick()}>
         {title}
         <i class="fa-solid" class:fa-chevron-down={!expanded} class:fa-chevron-up={expanded}></i>
@@ -44,11 +44,8 @@
 
 
 <style>
-    .component {
-        position: relative;
-    }
-
     .title {
+        position: relative;
         cursor: pointer;
         font-size: 1rem;
         padding: 1em;
