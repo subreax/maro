@@ -7,6 +7,7 @@
     export let itemId = "";
     export let title = "Empty title";
     export let expanded = false;
+    export let addSeparator = true;
 
     function toggleContent(val) {
         expanded = val;
@@ -29,11 +30,15 @@
     </p>
 
     {#if expanded}
-    <div transition:slide>
-        <div class="content">
-            <slot></slot>
+        <div transition:slide>
+            <div class="content">
+                <slot></slot>
+            </div>
         </div>
-    </div>
+    {/if}
+
+    {#if addSeparator}
+        <hr>
     {/if}
 </div>
 
@@ -56,7 +61,7 @@
         color: #da8c90;
     }
 
-    i {
+    .title i {
         position: absolute;
         
         top: 1.5em;
@@ -69,5 +74,9 @@
         padding: 10px 1em;
     }
 
+    hr {
+        color: #DBDBDBB2;
+        margin: 0 1em;
+    }
 
 </style>

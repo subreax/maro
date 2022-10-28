@@ -4,6 +4,8 @@
     export let style = "";
     export let data = [];
 
+    $: lastId = data[data.length-1].id.toString();
+
     let expandedItemId = "";
 
     function onItemToggled(e) {
@@ -15,9 +17,14 @@
 
 </script>
 
-<div class="component" {style}>
+<div {style}>
     {#each data as item (item.id)}
-        <ExpandableItem itemId={item.id.toString()} title={item.title} on:toggle={onItemToggled} expanded={item.id.toString() === expandedItemId}>
+        <ExpandableItem itemId={item.id.toString()} 
+                        title={item.title} 
+                        expanded={item.id.toString() === expandedItemId} 
+                        addSeparator={item.id.toString() !== lastId}
+                        on:toggle={onItemToggled} 
+                        >
             {@html item.content}
         </ExpandableItem>
     {:else}
