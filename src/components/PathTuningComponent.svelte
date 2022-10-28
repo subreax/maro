@@ -35,8 +35,19 @@
 <div class="wrapper">
     <div class="status-bar">
         <div class="btn-group">
-            <ToggleButton style="width: 100%; flex: 1" on:click={() => modeSelected = 0} toggled={modeSelected === 0}>Быстрый</ToggleButton>
-            <ToggleButton style="width: 100%; flex: 1" on:click={() => modeSelected = 1} toggled={modeSelected === 1}>Расширенный</ToggleButton>
+            <ToggleButton   style="width: 100%; flex: 1" 
+                            on:toggle={() => modeSelected = 0} 
+                            toggled={modeSelected === 0}
+                            toggleLocked={modeSelected === 0}>
+                Быстрый
+            </ToggleButton>
+
+            <ToggleButton   style="width: 100%; flex: 1" 
+                            on:toggle={() => modeSelected = 1} 
+                            toggled={modeSelected === 1}
+                            toggleLocked={modeSelected === 1}>
+                Расширенный
+            </ToggleButton>
         </div>
         
         <ToggleButton style="margin-left: 16px" className="btn__icon" on:click={(event) => contentToggled(event.detail.toggle)}>

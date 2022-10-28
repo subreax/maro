@@ -4,14 +4,17 @@
     const dispatch = createEventDispatcher();
 
     export let toggled = false;
+    export let toggleLocked = false;
     export let className = "";
     export let style = "";
 
     function onClick(e) {
         e.preventDefault(); 
-        toggled = !toggled;
-
-        dispatch("click", {toggle: toggled});
+        
+        if (!toggleLocked) {
+            toggled = !toggled;
+            dispatch("toggle", {toggle: toggled});
+        }
     }
 
 </script>
