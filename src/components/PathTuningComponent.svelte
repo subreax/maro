@@ -50,7 +50,7 @@
             </ToggleButton>
         </div>
         
-        <ToggleButton style="margin-left: 16px" className="btn__icon" on:click={(event) => contentToggled(event.detail.toggle)}>
+        <ToggleButton style="margin-left: 16px" className="btn__icon" on:toggle={(event) => contentToggled(event.detail.toggle)}>
             <i class="fa-solid" class:fa-chevron-down={!expanded} class:fa-chevron-up={expanded}></i>
         </ToggleButton>
     </div>
