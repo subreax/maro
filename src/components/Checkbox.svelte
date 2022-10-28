@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <script>
-    export let checkboxContent;
+    export let checkboxContent, status; 
 </script>
 
 <div>
-  <input type="checkbox" id="customCheckbox"/>
+  <input type="checkbox" bind:checked={status} id="customCheckbox"/>
   <label  for="customCheckbox">{checkboxContent}</label>
 </div>
 

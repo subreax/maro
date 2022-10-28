@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-
     "prepare": "smui-theme compile build/smui.css -i src/theme"
   },
   "devDependencies": {
@@ -21,5 +20,9 @@
     "smui-theme": "^7.0.0-beta.0",
     "svelte": "^3.49.0",
     "vite": "^3.1.0"
+  },
+  "dependencies": {
+    "mapbox-gl": "^2.10.0",
+    "svelte-routing": "^1.6.0"
   }
 }
