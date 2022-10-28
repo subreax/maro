@@ -1,9 +1,11 @@
 <script>
-    import Textfield from "@smui/textfield";
+    // @ts-ignore
     import Checkbox from "@smui/checkbox";
+    // @ts-ignore
     import FormField from "@smui/form-field";
     import Button from "@smui/button";
     import { Label } from "@smui/common";
+    import Textfield from "./Textfield.svelte";
 
     let remember = false;
     let email = "";
@@ -24,20 +26,20 @@
     </figure>
 
     <div class="auth-field">
-        <Textfield variant="outlined" bind:value={email} label="E-mail" />
+        <Textfield bind:value={email} />
     </div>
 
     <div class="auth-field">
-        <Textfield variant="outlined" bind:value={password} label="Пароль" />
+        <!-- <Textfield variant="outlined" bind:value={password} label="Пароль"/> -->
     </div>
 
     <div class="forgot-password">
-        <Label><a href="#">Забыли пароль?</a></Label>
+        <Label><a href="">Забыли пароль?</a></Label>
     </div>
 
     <div class="remember-me">
         <FormField>
-            <Checkbox bind:checked={remember} />
+            <Checkbox bind:remember />
             <span slot="label">Запомнить меня</span>
         </FormField>
     </div>
@@ -45,26 +47,37 @@
     <Button
         variant="raised"
         class="button-shaped-round"
-        on:click={(e) => {e.preventDefault(); signInClicked(); }}>
+        on:click={(e) => {
+            e.preventDefault();
+            signInClicked();
+        }}
+    >
         <Label>Войти</Label>
     </Button>
 
-    <div>
-        <h2><span>или</span></h2>
+    <div class="title">
+        <span> или </span>
     </div>
 
     <Button
         variant="raised"
         class="button-shaped-round"
-        on:click={(e) => { e.preventDefault(); signUpClicked(); }}>
+        on:click={(e) => {
+            e.preventDefault();
+            signUpClicked();
+        }}
+    >
         <Label>Регистрация</Label>
     </Button>
 </form>
 
 <style>
-    * {
+    *,
+    *::before,
+    *::after {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
     }
 
     form {
@@ -94,6 +107,7 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 40px;
+        padding-right: 20px;
     }
 
     .forgot-password {
@@ -102,20 +116,41 @@
 
     .remember-me {
         margin-bottom: 10px;
+        position: relative;
+        left: -10px;
     }
 
-    h2 {
-        margin: 20px 0 20px;
+    .title {
+        overflow: hidden;
         text-align: center;
-        border-bottom: 1px solid #000;
-        line-height: 0.1em;
-
-        font-weight: 400;
+        font-size: 20px;
     }
 
-    h2 span {
-        background: #fff;
-        padding: 10px;
-        font-size: 1.2rem;
+    .title span {
+        /* Стили тега обертки для заголовков 
+    ** в несколько строк */
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .title:before,
+    .title:after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        height: 1px;
+        background-color: #262626;
+        position: relative;
+    }
+
+    .title::before {
+        margin-left: -100%;
+        left: -14px;
+    }
+
+    .title::after {
+        margin-right: -100%;
+        right: -14px;
     }
 </style>
