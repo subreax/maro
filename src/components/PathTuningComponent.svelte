@@ -57,6 +57,12 @@
 
 
 <style>
+    @media screen and (min-width: 500px) {
+        .wrapper {
+            width: 460px;
+        }
+    }
+
     .wrapper {
         background: #FAF2EF;
         max-width: 460px;

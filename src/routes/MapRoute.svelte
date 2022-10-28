@@ -191,7 +191,7 @@
     .path-tuning-component {
         position: absolute;
         top: 5%;
-        left: 5%;
+        left: 10px;
         z-index: 10;
     }
 </style>
