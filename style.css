@@ -73,14 +73,3 @@ button:hover {
 .btn__icon {
     padding: 0.71rem;
 }
-
-.btn--stretch {
-    width: 100%;
-}
-
-
-
-
-.xlist-item {
-    padding: 1em 0; /*todo*/
-}

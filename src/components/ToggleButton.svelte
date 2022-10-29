@@ -5,8 +5,9 @@
 
     export let toggled = false;
     export let toggleLocked = false;
-    export let className = "";
     export let style = "";
+    export let className = "btn__toggle"; // css classes used to style button
+    export let toggledClass = "btn__toggle--active"; // css classes used to style toggled button
 
     function onClick(e) {
         e.preventDefault(); 
@@ -20,8 +21,7 @@
 </script>
 
 <button 
-    class="btn__toggle {className}" 
-    class:btn__toggle--active={toggled} 
+    class="{className} {toggled ? toggledClass : ""}" 
     style={style}
     on:click={onClick}>
     
