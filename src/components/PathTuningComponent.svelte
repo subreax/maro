@@ -1,34 +1,36 @@
 <script>
-    import ToggleButton from "./ToggleButton.svelte";
-    import ExpandableList from "./ExpandableList.svelte";
     import { slide } from "svelte/transition"
+    import ToggleButton from "./ToggleButton.svelte";
+    import ExpandableItem from "./ExpandableItem.svelte"
+    import SimpleWishesSelector from "./SimpleWishesSelector.svelte";
+    import SimpleInterestsSelector from "./SimpleInterestsSelector.svelte";
 
-
-    export let data = [
-        {
-            id: 1,
-            title: "Пожелания",
-            content: "<p>Лорем ипсум долор сит амет, cонсеcтетур адиписcинг елит, сед до еиусмод темпор инcидидунт ут лаборе ет долоре магна алиқуа. Aенеан вел елит сcелерисқуе маурис пеллентесқуе.</p>"
-        }, 
-        {
-            id: 2,
-            title: "Критерии времяпрепровождения",
-            content: "<p>Еним праесент елементум фаcилисис лео. Урна молестие ат елементум еу фаcилисис сед. Витае cонгуе маурис рҳонcус аенеан вел елит сcелерисқуе маурис. Масса еним неc дуи нунc маттис еним ут. Етиам дигниссим диам қуис еним лобортис сcелерисқуе ферментум.</p>"
-        },
-        {
-            id: 3,
-            title: "Характеристика посетителей",
-            content: "<p>Теллус ид интердум велит лаореет ид донеc. Ест сит амет фаcилисис магна етиам темпор. Aмет ест плаcерат ин егестас ерат. Малесуада бибендум арcу витае елементум cурабитур витае. Рисус претиум қуам вулпутате дигниссим. Ин нибҳ маурис cурсус маттис молестие а иаcулис. </p>"
-        }
-    ];
 
     let modeSelected = 0;
     let expanded = false;
+    let expandedItem = "";
 
     function contentToggled(val) {
         expanded = val;
+        expandedItem = "";
     }
 
+
+    function onItemToggled(event) {
+        const itemId = event.detail.itemId.toString();
+        const state = event.detail.state;
+        
+        let newExpandedItem = ""
+
+        if (state) {
+            newExpandedItem = itemId;
+        } 
+        else {
+            newExpandedItem = itemId.substring(0, itemId.length-1);
+        }
+
+        expandedItem = newExpandedItem;
+    }
 
 </script>
 
@@ -56,13 +58,41 @@
     </div>
 
     {#if expanded}
-    <div class="expandable-block" transition:slide>
-        <ExpandableList style="margin: 10px 0; background: #fff; border-radius: 20px" {data}/>
-        <div class="buttons">
-            <button>Сбросить всё</button>
-            <button class="btn__raised">Применить</button>
+        <div class="expandable-block" transition:slide>
+
+            <div style="margin: 10px 0; background: #fff; border-radius: 20px">
+                
+                <ExpandableItem title="Пожелания"     
+                                itemId="1" 
+                                expanded={expandedItem[0] === "1"}
+                                on:toggle={onItemToggled} 
+                                >
+                    <SimpleWishesSelector />
+                </ExpandableItem>
+
+                <ExpandableItem title="Интересы"
+                                itemId="2"
+                                expanded={expandedItem[0] === "2"}
+                                on:toggle={onItemToggled} 
+                                >
+                    <SimpleInterestsSelector />
+                </ExpandableItem>
+
+                <ExpandableItem itemId="3" 
+                                title="Характеристики посетителей" 
+                                expanded={expandedItem[0] === "3"} 
+                                on:toggle={onItemToggled} 
+                                addSeparator={false}
+                                >
+                    Лорем ипсум долор сит амет
+                </ExpandableItem>
+            </div>
+
+            <div class="buttons">
+                <button>Сбросить всё</button>
+                <button class="btn__raised">Применить</button>
+            </div>
         </div>
-    </div>
     {/if}
 </div>
 

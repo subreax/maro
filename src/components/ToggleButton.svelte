@@ -6,8 +6,8 @@
     export let toggled = false;
     export let toggleLocked = false;
     export let style = "";
-    export let className = "btn__toggle"; // css classes used to style button
-    export let toggledClass = "btn__toggle--active"; // css classes used to style toggled button
+    export let className = "btn__toggle"; // css classes used to style the button
+    export let toggledClass = "btn__toggle--active"; // css classes used to style toggled state of the button
 
     function onClick(e) {
         e.preventDefault(); 
