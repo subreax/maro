@@ -14,32 +14,36 @@
         display: none;
     }
 
-label {
-  display: inline-block;
-  cursor: pointer;
-  padding-left: 25px;
-  position:relative;
-}
+    label {
+        display: inline-block;
+        cursor: pointer;
+        padding-left: 35px;
+        position:relative;
 
-input[type=checkbox] + label:after {
-    font-family: 'Material Icons';
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    left: 0;
-    border: 2px solid #757575;
-    border-radius: 2px;
-}
+        color: #262626;
+        font-weight: 400;
+        font-size: 20px;
+    }
 
-input[type=checkbox]:checked + label:after {
-    content: "\E5CA";
-    color: #fff;
-    font-size: 16px;
-    text-align: center;
-    line-height: 16px;
-    background: #E22C38;
-    border-color: #E22C38;
-}
+    input[type=checkbox] + label:after {
+        font-family: 'Material Icons';
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: 0;
+        border: 2px solid #262626;
+        border-radius: 4px;
+    }
+
+    input[type=checkbox]:checked + label:after {
+        content: "\E5CA";
+        color: #fff;
+        font-size: 20px;
+        text-align: center;
+        line-height: 20px;
+        background: #E22C38;
+        border-color: #E22C38;
+    }
 </style>

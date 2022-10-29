@@ -1,156 +1,105 @@
 <script>
-import Button from "@smui/button";
-import { Label } from "@smui/common";
-import Textfield from "../components/Textfield.svelte";
-import PasswordField from "../components/PasswordField.svelte";
-import Checkbox from "../components/Checkbox.svelte";
+    import Textfield from "../components/Textfield.svelte";
+    import PasswordField from "../components/PasswordField.svelte";
+    import Checkbox from "../components/Checkbox.svelte";
 
-let remember;
-let email;
-let password;
+    let remember;
+    let email;
+    let password;
 
-function signInClicked() {
-    // вход кликнут
-}
+    function signInClicked() {
+        // вход кликнут
+    }
 
-function signUpClicked() {
-    // регистрация кликнута
-}
+    function signUpClicked() {
+        // регистрация кликнута
+    }
 </script>
 
-<form class="container">
-    <figure class="icon">
+<form>
+    <figure class="emblem">
         <img src="../assets/Logo.svg" alt="" />
     </figure>
 
     <div class="fields">
-        <div class="auth-field">
-            <Textfield type="text" labelContent={"Email"} bind:inputContent={email}/>
+        <div class="textfields">
+            <Textfield type="text" labelContent={"Email или телефон"} bind:inputContent={email}/>
+            <PasswordField idIcon={"icon1"} idPassword={"passwordWrite"} labelContent={"Пароль"} bind:inputContent={password}/>
         </div>
 
-        <div class="auth-field">
-            <PasswordField labelContent={"Пароль"} bind:inputContent={password}/>
-        </div>
-
-        <div class="group">
-                <Checkbox checkboxContent="Запомнить меня" bind:status={remember}/>
-
-                <a href="" class="forgot-password">Забыли пароль?</a>
+        <div class="additional-buttons">
+            <Checkbox checkboxContent="Запомнить меня" bind:status={remember}/>
+            <a href="" style="color: #E22C38;" class="additional-button">Забыли пароль?</a>
         </div>
     </div>
 
+
     <div class="buttons">
-        <Button
-        variant="raised"
-        class="button-shaped-round"
+        <button class="btn__raised btn-primary" 
         on:click={(e) => {
             e.preventDefault();
             signInClicked();
-        }}
-    >
-        <Label>Войти</Label>
-    </Button>
+        }}>
+            Войти
+        </button>
 
-    <div class="title">
-        <span> или </span>
-    </div>
+        <div class="btn-guest__container">
+            <a href="" style="color: #E22C38;" class="additional-button">Продолжить как гость</a>
+        </div>
 
-    <Button
-        variant="raised"
-        class="button-shaped-round"
+        <div class="heading-with-lines">
+            <span> или </span>
+        </div>
+
+        <button class="btn-secondary" 
         on:click={(e) => {
             e.preventDefault();
             signUpClicked();
-        }}
-    >
-        <Label>Регистрация</Label>
-    </Button>
-    </div>
+        }}>
+            Регистрация
+        </button>
 
+    </div>
 </form>
 
 <style>
-    form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    height: 100vh;
-    min-height: 700px;
-
-    min-width: 300px;
-    max-width: 500px;
-
-    margin: 0 auto;
-    padding: 0 32px;
-}
-
-    .icon {
-        margin: 0 auto;
-        max-width: 160px;
-        max-height: 160px;
-
-        margin-bottom: 62px;
-    }
-
-    .auth-field {
+    .fields {
         display: flex;
         flex-direction: column;
-        margin-bottom: 40px;
-        padding-right: 20px;
+        justify-content: center;
+
+        margin-top: 41px;
+        gap: 30px;
     }
 
-    .group {
+    .textfields {
+        display: flex;
+        flex-direction: column;
+
+        padding-right: 25px;
+        gap: 35px;
+    }
+
+    .additional-buttons {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
 
         gap: 10px;
-        padding: 0 57px 0 57px;
-    }
-
-    .forgot-password{
-        text-decoration: none;
-        color: #E22C38;
+        padding: 0 40px 0 40px;
     }
 
     .buttons {
+        display: grid;
+        justify-content: center;
+
+        grid-row-gap: 20px;
         margin-top: 40px;
     }
-        
-    .title {
-        overflow: hidden;
-        text-align: center;
-        font-size: 20px;
-    }
 
-    .title span {
-        /* Стили тега обертки для заголовков 
-    ** в несколько строк */
-        display: inline-block;
-        vertical-align: middle;
+    .btn-guest__container {
+        display: flex;
+        justify-content: center;
     }
-
-    .title:before,
-    .title:after {
-        content: "";
-        display: inline-block;
-        vertical-align: middle;
-        width: 100%;
-        height: 1px;
-        background-color: #262626;
-        position: relative;
-    }
-
-    .title::before {
-        margin-left: -100%;
-        left: -14px;
-    }
-
-    .title::after {
-        margin-right: -100%;
-        right: -14px;
-    }
-
-    </style>
+</style>
