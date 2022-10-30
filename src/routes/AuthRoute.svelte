@@ -76,18 +76,16 @@
         display: flex;
         flex-direction: column;
 
-        padding-right: 25px;
         gap: 35px;
     }
 
     .additional-buttons {
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
-        align-items: center;
+        flex-wrap: wrap;
 
-        gap: 10px;
-        padding: 0 40px 0 40px;
+        padding: 0 40px;
+        gap: 20px;
     }
 
     .buttons {
