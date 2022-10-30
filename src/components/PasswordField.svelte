@@ -1,39 +1,36 @@
 <script>
     export let labelContent, inputContent, idIcon, idPassword;
 
+    let isPasswordHidden = true;
+    let inputElement = null;
+
     function togglePassword() {
-        let input = document.getElementById(idPassword);
-        let icon = document.getElementById(idIcon);
-        
-	    if (input.getAttribute('type') == 'password') {
-		    input.setAttribute('type', 'text');
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
-	    } 
-        else {
-		    input.setAttribute('type', 'password');
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
-	    }
+        isPasswordHidden = !isPasswordHidden;
+        inputElement.setAttribute("type", isPasswordHidden ? "password" : "text");
     }
 </script>
 
 
 <div class="field">
-   <input id={idPassword} type="password" bind:value={inputContent}  required>
+   <input bind:this={inputElement} type="password" bind:value={inputContent}  required>
    <label>{labelContent}</label>
 
-   <div class="input-icon"  on:click={togglePassword}>
-        <i id={idIcon} class="fa-sharp fa-solid fa-eye-slash"></i>
+   <div class="input-icon" on:click={togglePassword}>
+        <i  class="fa-solid" 
+            class:fa-eye-slash={isPasswordHidden}
+            class:fa-eye={!isPasswordHidden}
+            ></i>
    </div>
 </div>
 
 <style>
     .input-icon {
-        font-size: 25px;
+        cursor: pointer;
         position: absolute;
-        top: 20px;
-        right: -6px;
+        font-size: 1.1rem;
+        top: 50%;
+        right: 1rem;
+        transform: translate(-50%, -50%);
         transition: all .4s ease;
     }
 </style>

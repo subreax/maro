@@ -17,20 +17,20 @@
     label {
         display: inline-block;
         cursor: pointer;
-        padding-left: 35px;
+        padding-left: 2rem;
         position:relative;
 
         color: #262626;
         font-weight: 400;
-        font-size: 20px;
+        font-size: 1rem;
     }
 
     input[type=checkbox] + label:after {
         font-family: 'Material Icons';
         content: "";
         display: inline-block;
-        width: 20px;
-        height: 20px;
+        width: 1rem;
+        height: 1rem;
         position: absolute;
         left: 0;
         border: 2px solid #262626;
@@ -40,9 +40,9 @@
     input[type=checkbox]:checked + label:after {
         content: "\E5CA";
         color: #fff;
-        font-size: 20px;
+        font-size: 1rem;
         text-align: center;
-        line-height: 20px;
+        line-height: 1rem;
         background: #E22C38;
         border-color: #E22C38;
     }

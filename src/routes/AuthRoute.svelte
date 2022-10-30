@@ -18,7 +18,7 @@
 
 <form>
     <figure class="emblem">
-        <img src="../assets/Logo.svg" alt="" />
+        <img src="/assets/Logo.svg" alt="" />
     </figure>
 
     <div class="fields">
