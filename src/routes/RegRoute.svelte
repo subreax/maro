@@ -8,6 +8,7 @@
     let password;
     let passwordRepeated;
 
+
     function signInClicked() {
         // вход кликнут
     }
@@ -77,7 +78,6 @@
         display: flex;
         flex-direction: column;
 
-        padding-right: 25px;
         gap: 35px;
     }
 
