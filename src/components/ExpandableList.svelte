@@ -4,7 +4,7 @@
     export let style = "";
     export let data = [];
 
-    $: lastId = data[data.length-1].id.toString();
+    $: lastId = data.length > 0 ? data[data.length-1].id.toString() : "";
 
     let expandedItemId = "";
 
