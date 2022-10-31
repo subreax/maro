@@ -4,6 +4,7 @@
     import ExpandableItem from "./ExpandableItem.svelte"
     import SimpleWishesSelector from "./SimpleWishesSelector.svelte";
     import SimpleInterestsSelector from "./SimpleInterestsSelector.svelte";
+    import CompanyConfigurer from "./CompanyConfigurer.svelte";
 
 
     let modeSelected = 0;
@@ -79,12 +80,12 @@
                 </ExpandableItem>
 
                 <ExpandableItem itemId="3" 
-                                title="Характеристики посетителей" 
+                                title="Компания" 
                                 expanded={expandedItem[0] === "3"} 
                                 on:toggle={onItemToggled} 
                                 addSeparator={false}
                                 >
-                    Лорем ипсум долор сит амет
+                    <CompanyConfigurer />
                 </ExpandableItem>
             </div>
 

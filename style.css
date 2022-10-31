@@ -21,6 +21,7 @@ hr {
 }
 
 button {
+    box-sizing: border-box;
     display: inline-block;
     font-weight: 600;
     border: none;
@@ -32,7 +33,7 @@ button {
     cursor: pointer;
     white-space: nowrap;
 
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
 button:hover {
@@ -117,11 +118,13 @@ form {
     color: #262626;
     font-weight: 600;
     border-radius: 8px;
+    border: 1px solid transparent;
 }
 
-.btn__chip.btn__chip--toggled {
-    background: #E22C38;
-    color: white;
+.btn__chip.btn__chip--toggled {    
+    border-color: #E22C387f;
+    background: #e22c381f;
+    color: #e22c38 
 }
 
 .field {
