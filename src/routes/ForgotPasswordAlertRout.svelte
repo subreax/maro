@@ -7,7 +7,7 @@
         <img src="../assets/Logo.svg" alt="" />
     </figure>
 
-    <div class="input">
+    <div>
         <p class="label">Ссылка на сброс пароля отправлена на почту</p>
     </div>
 
@@ -25,11 +25,10 @@
 <style>
     .label {
         display: flex;
-        align-items: center;
-        text-align: center;
+        justify-content: center;
 
         font-weight: 400;
-        font-size: 28px;
+        font-size: 1.5rem;
         line-height: 47px;
 
         color: #262626;
