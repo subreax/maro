@@ -1,4 +1,5 @@
 <script>
+    import CodeInputComponent from "../components/CodeInputComponent.svelte";
     import PathTuningComponent from "../components/PathTuningComponent.svelte";
     
     export let location;
@@ -10,4 +11,4 @@
 <PathTuningComponent />
 
 
-
+<CodeInputComponent digits={6} />
