@@ -6,6 +6,7 @@
     import SimpleInterestsSelector from "./SimpleInterestsSelector.svelte";
     import CompanyConfigurer from "./CompanyConfigurer.svelte";
     import DetailedWishesSelector from "./DetailedWishesSelector.svelte";
+    import DetailedInterestsSelector from "./DetailedInterestsSelector.svelte";
 
 
     let modeSelected = 0;
@@ -70,9 +71,9 @@
                                 on:toggle={onItemToggled} 
                                 >
                     {#if modeSelected === 0}
-                    <SimpleWishesSelector />
+                        <SimpleWishesSelector />
                     {:else}
-                    <DetailedWishesSelector />
+                        <DetailedWishesSelector />
                     {/if}
                 </ExpandableItem>
 
@@ -81,7 +82,11 @@
                                 expanded={expandedItem[0] === "2"}
                                 on:toggle={onItemToggled} 
                                 >
-                    <SimpleInterestsSelector />
+                    {#if modeSelected === 0}
+                        <SimpleInterestsSelector />
+                    {:else}
+                        <DetailedInterestsSelector />
+                    {/if}
                 </ExpandableItem>
 
                 <ExpandableItem itemId="3" 

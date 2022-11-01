@@ -140,7 +140,7 @@
     input {
         box-sizing: border-box;
         font-size: inherit;
-        background: #00000021;
+        background: #00000010;
         width: 3em;
         line-height: 3em;
         padding: 0;

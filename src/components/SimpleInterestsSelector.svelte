@@ -1,6 +1,5 @@
 <script>
-    import ToggleButton from "./ToggleButton.svelte";
-
+    import ChipGroup from "./ChipGroup.svelte";
 
     export let interests = [
         { id: "1", text: "Музеи" },
@@ -15,8 +14,4 @@
     ];
 </script>
 
-<div class="chip-group">
-    {#each interests as interest (interest.id)}
-        <ToggleButton className="btn__chip" toggledClass="btn__chip--toggled">{interest.text}</ToggleButton>
-    {/each}
-</div>
+<ChipGroup items={interests} />

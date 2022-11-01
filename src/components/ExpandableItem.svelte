@@ -71,7 +71,7 @@
     }
 
     .content {
-        margin: 10px 16px;
+        padding: 10px 16px;
     }
 
     hr {
