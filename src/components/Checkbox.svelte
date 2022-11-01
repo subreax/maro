@@ -15,9 +15,8 @@
     }
 
     label {
-        display: inline-block;
         cursor: pointer;
-        padding-left: 2rem;
+        padding-left: 1.9rem;
         position:relative;
 
         color: #262626;

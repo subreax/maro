@@ -9,9 +9,9 @@
     </figure>
 
     <div class="input">
-        <p class="label">Введите почту или номер телефона, который привязан к аккаунту</p>
+        <p class="label">Код отправлен по СМС</p>
         <div>
-            <Textfield type="text" labelContent={"Email или телефон"} bind:inputContent={loginInfo}/>
+            <Textfield type="text" labelContent={"Код подтверждения"} bind:inputContent={loginInfo}/>
         </div>
     </div>
 
@@ -27,17 +27,18 @@
 </form>
 
 <style>
+
     .input {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 40px;
+        align-items: center;
+        gap: 20px;
     }
 
     .label {
         display: flex;
-        align-items: center;
-        text-align: center;
+        justify-content: center;
 
         font-weight: 400;
         font-size: 1.5rem;
