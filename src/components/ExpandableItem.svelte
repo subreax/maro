@@ -24,16 +24,14 @@
 </script>
 
 <div>
-    <p class="title" on:click={() => onClick()}>
+    <p class="title" class:title--active={expanded} on:click={() => onClick()}>
         {title}
         <i class="fa-solid" class:fa-chevron-down={!expanded} class:fa-chevron-up={expanded}></i>
     </p>
 
     {#if expanded}
-        <div transition:slide>
-            <div class="content">
-                <slot></slot>
-            </div>
+        <div class="content" transition:slide>
+            <slot></slot>
         </div>
     {/if}
 
@@ -51,6 +49,11 @@
         padding: 1em;
         font-weight: 600;
         color: #999999;
+        transition: color 0.2s;
+    }
+
+    .title--active {
+        color: #da8c90;
     }
 
     .title:hover {
@@ -68,7 +71,7 @@
     }
 
     .content {
-        padding: 10px 1em;
+        margin: 10px 16px;
     }
 
     hr {
