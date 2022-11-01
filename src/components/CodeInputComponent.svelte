@@ -1,21 +1,17 @@
 <script>
     import { createEventDispatcher, onMount } from "svelte";
-    
-    export const STYLE_NONE = 0;
-    export const STYLE_CORRECT = 1;
-    export const STYLE_WRONG = 2;
-
+    import { CodeInputStyle } from "./CodeInputStyle"
     
     const dispatch = createEventDispatcher();
 
     export let digits = 4;
-    export let style = STYLE_NONE;
+    export let style = CodeInputStyle.NONE;
 
     let component;
     let inputs;
     let currentInputIndex = 0;
 
-    let enteredCode = [];
+    let enteredCode = Array(digits).fill("");
     $: {
         let isCodeEntered = true;
         for (let i = 0; i < digits; ++i) {
@@ -27,84 +23,65 @@
 
         if (isCodeEntered) {
             dispatch("code", { code: enteredCode.join("") })
+        } 
+        else {
+            style = CodeInputStyle.NONE;
         }
     }
-
-    for (let i = 0; i < digits; ++i) {
-        enteredCode.push("");
-    }
-
 
     function isDigit(character) {
         const digit = character ? character.codePointAt(0) - 48 : -1;
         return digit >= 0 && digit <= 9;
     }
 
-    function setCurrentInputIndex(i) {
+    function setCarretToEnd() {
+        inputs[currentInputIndex].setSelectionRange(2, 2);
+    }
+
+
+    function setInput(i) {
         if (i < 0) {
             i = 0;
-        } else if (i >= digits) {
+        }
+        else if (i >= digits) {
             i = digits-1;
         }
-
         currentInputIndex = i;
     }
 
-    function clamp(i, min, max) {
-        if (i < min) {
-            i = min;
-        }
-        else if (i > max) {
-            i = max;
-        }
-        return i;
+    function getInput() {
+        return inputs[currentInputIndex];
     }
 
-    function clampInputIndex(i) {
-        return clamp(i, 0, digits-1);
+
+    function getDigit() {
+        return enteredCode[currentInputIndex];
     }
 
-    function setCarretToEnd(offset = 0) {
-        const i = clampInputIndex(offset + currentInputIndex);
-        inputs[i].setSelectionRange(2, 2);
+    function setDigit(val) {
+        enteredCode[currentInputIndex] = val;
     }
 
-    function getInput(offset = 0) {
-        const i = clampInputIndex(offset + currentInputIndex);
-        return inputs[i];
-    }
-
-    function getCodeValue(offset = 0) {
-        const i = clampInputIndex(offset + currentInputIndex);
-        return enteredCode[i];
-    }
-
-    function setCodeValue(val, offset = 0) {
-        const i = clampInputIndex(offset + currentInputIndex);
-        enteredCode[i] = val;
-    }
 
     function onInputEntered(event) {
         event.preventDefault();
-
-        style = STYLE_NONE;
 
         const data = event.key;
         const charRemoved = event.inputType !== undefined && event.inputType.startsWith("deleteContent");
 
         if (!charRemoved) {
             if (isDigit(data)) {
-                if (getCodeValue().length > 0) {
-                    setCurrentInputIndex(currentInputIndex+1);
+                if (getDigit().length > 0) {
+                    setInput(currentInputIndex+1);
                 }
 
-                if (getCodeValue().length === 0) {
-                    setCodeValue(data);
+                if (getDigit().length === 0) {
+                    setDigit(data);
                 }
             }
         }
         else {
-            setCurrentInputIndex(currentInputIndex-1);
+            setInput(currentInputIndex-1);
         }
 
         getInput().focus();
@@ -114,14 +91,14 @@
     function onInputClicked(event) {
         for (let i = 0; i < digits; ++i) {
             if (inputs[i] === event.target) {
-                setCurrentInputIndex(i);
+                setInput(i);
                 break;
             }
         }
 
-        if (getCodeValue().length === 0) {
+        if (getDigit().length === 0) {
             while (currentInputIndex > 0) {
-                if (getCodeValue().length !== 0) {
+                if (getDigit().length !== 0) {
                     break;
                 }
                 --currentInputIndex;
@@ -129,7 +106,7 @@
         } 
         else {
             while (currentInputIndex < digits) {
-                if (getCodeValue().length === 0) {
+                if (getDigit().length === 0) {
                     break;
                 }
                 ++currentInputIndex;
@@ -149,12 +126,13 @@
 
 <div bind:this={component} on:input={onInputEntered} on:click={onInputClicked}>
     {#each Array(digits) as _, i (i)}
-        <input  class:correct={style===STYLE_CORRECT} 
-                class:wrong={style===STYLE_WRONG} 
+        <input  class:correct={style===CodeInputStyle.CORRECT} 
+                class:wrong={style===CodeInputStyle.WRONG} 
                 type="text" 
                 maxlength="2" 
                 bind:value={enteredCode[i]} 
-                on:keypress={onInputEntered}>
+                on:keypress={onInputEntered}
+                style="transition: background-color {(i+1)/digits * 0.5}s">
     {/each}
 </div>
 
@@ -162,23 +140,24 @@
     input {
         box-sizing: border-box;
         font-size: inherit;
-        background: #0000000e;
+        background: #00000021;
         width: 3em;
         line-height: 3em;
         padding: 0;
         margin: 8px;
         border: none;
-        border-radius: 8px;
+        border-radius: 0.5em;
         text-align: center;
         outline: none;
+        font-weight: 600;
     }
 
     input.correct {
-        background: #00ff220e;
+        background: #2bef2873;
     }
 
     input.wrong {
-        background: #ff00000e;
+        background: #ff000073;
     }
 
 </style>
