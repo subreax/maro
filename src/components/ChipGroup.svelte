@@ -1,5 +1,8 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import ToggleButton from "./ToggleButton.svelte";
+
+    const dispatch = createEventDispatcher();
 
     export let items = [
         /* { text: "", checked?: false} */
@@ -12,6 +15,7 @@
     function onItemChecked(checked, i) {
         if (!singleSelect) {
             items[i].checked = checked;
+            notifyChecked(items[i]);
             return;
         }
 
@@ -27,6 +31,11 @@
         }   
         
         items[i].checked = checked;
+        notifyChecked(items[i]);
+    }
+
+    function notifyChecked(item) {
+        dispatch("checked", { item });
     }
 
 </script>

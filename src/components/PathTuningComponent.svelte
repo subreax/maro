@@ -1,5 +1,6 @@
 <script>
     import { slide } from "svelte/transition"
+    import { createEventDispatcher } from "svelte";
     import ToggleButton from "./ToggleButton.svelte";
     import ExpandableItem from "./ExpandableItem.svelte"
     import SimpleWishesSelector from "./SimpleWishesSelector.svelte";
@@ -9,9 +10,15 @@
     import DetailedInterestsSelector from "./DetailedInterestsSelector.svelte";
 
 
+    const dispatch = createEventDispatcher();
+
+
     let modeSelected = 0;
     let expanded = false;
     let expandedItem = "";
+
+    let checkedWishes = 0;
+    let checkedInterests = 0;
 
     function contentToggled(val) {
         expanded = val;
@@ -33,6 +40,16 @@
         }
 
         expandedItem = newExpandedItem;
+    }
+
+
+    function onApply() {
+        dispatch("apply", { wishes: checkedWishes, interests: checkedInterests });
+    }
+
+    function onReset() {
+        checkedWishes = 0;
+        checkedInterests = 0;
     }
 
 </script>
@@ -71,9 +88,9 @@
                                 on:toggle={onItemToggled} 
                                 >
                     {#if modeSelected === 0}
-                        <SimpleWishesSelector />
+                        <SimpleWishesSelector bind:checkedItems={checkedWishes}/>
                     {:else}
-                        <DetailedWishesSelector />
+                        <DetailedWishesSelector bind:checkedWishes={checkedWishes}/>
                     {/if}
                 </ExpandableItem>
 
@@ -83,9 +100,9 @@
                                 on:toggle={onItemToggled} 
                                 >
                     {#if modeSelected === 0}
-                        <SimpleInterestsSelector />
+                        <SimpleInterestsSelector bind:checkedInterests={checkedInterests} />
                     {:else}
-                        <DetailedInterestsSelector />
+                        <DetailedInterestsSelector bind:checkedInterests={checkedInterests} />
                     {/if}
                 </ExpandableItem>
 
@@ -100,8 +117,8 @@
             </div>
 
             <div class="buttons">
-                <button>Сбросить всё</button>
-                <button class="btn__raised">Применить</button>
+                <button on:click|preventDefault={() => onReset()}>Сбросить всё</button>
+                <button class="btn__raised" on:click|preventDefault={() => onApply()}>Применить</button>
             </div>
         </div>
     {/if}

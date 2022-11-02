@@ -1,18 +1,15 @@
 <script>
-    import ToggleButton from "./ToggleButton.svelte";
+    import IdControlledChipGroup from "./IdControlledChipGroup.svelte";
 
     export let wishes = [
-        { id: "1", text: "Только бесплатно" },
-        { id: "2", text: "Меньше людей" },
-        { id: "3", text: "На электробусах" },
-        { id: "4", text: "На улице" },
-        { id: "5", text: "В помещении" },
+        { id: 1, text: "Только бесплатно" },
+        { id: 32, text: "Меньше людей" },
+        { id: 8, text: "На электробусах" },
+        { id: 64, text: "На улице" },
+        { id: 128, text: "В помещении" },
     ];
+
+    export let checkedItems = 0;
 </script>
 
-<div class="chip-group">
-    {#each wishes as wish (wish.id)}
-        <ToggleButton className="btn__chip" toggledClass="btn__chip--toggled" >{wish.text}</ToggleButton>
-    {/each}
-</div>
-
+<IdControlledChipGroup items={wishes} bind:checkedItems={checkedItems} />

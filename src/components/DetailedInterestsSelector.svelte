@@ -1,72 +1,75 @@
 <script>
     import ExpandableItem from "./ExpandableItem.svelte";
-    import ChipGroup from "./ChipGroup.svelte";
+    import IdControlledChipGroup from "./IdControlledChipGroup.svelte";
 
     export let exhibitionsData = [
         {
             title: "Музейные",
             items: [
-                { textId: "museum_expo", text: "Экспозиции" },
-                { textId: "museum_excursions", text: "Экскурсии" },
+                { id: 1, text: "Постоянные экспозиции" },
+                { id: 1 << 2, text: "Временные экспозиции" },
+                { id: 1 << 3, text: "Экскурсии" },
             ]
         },
         {
             title: "Развлекательные",
             items: [
-                { textId: "", text: "Фестивали" },
-                { textId: "", text: "Концерты" },
-                { textId: "", text: "Аттракционы" },
+                { id: 1 << 4, text: "Фестивали" },
+                { id: 1 << 5, text: "Концерты" },
+                { id: 1 << 6, text: "Аттракционы" },
             ]
         },
         {
             title: "Образовательные",
             items: [
-                { textId: "", text: "Мастер-классы" },
-                { textId: "", text: "Лекции" },
+                { id: 1 << 7, text: "Мастер-классы" },
+                { id: 1 << 8, text: "Лекции" },
             ]
         },
         {
             title: "Спортивные",
             items: [
-                { textId: "", text: "Мастер-классы" },
-                { textId: "", text: "Забеги" },
-                { textId: "", text: "Периодические мероприятия" },
+                { id: 1 << 9, text: "Мастер-классы" },
+                { id: 1 << 10, text: "Забеги" },
+                { id: 1 << 24, text: "Периодические мероприятия" },
             ]
         },
         {
             title: "Гастрономические",
             items: [
-                { textId: "", text: "Гастрофестивали" }
+                { id: 1 << 11, text: "Гастрофестивали" }
             ]
         },
         {
             title: "Деловые",
             items: [
-                { textId: "", text: "ЭКСПО" }
+                { id: 1 << 12, text: "ЭКСПО" }
             ]
         }
     ];
 
     export let foodData = [
-        { textId: "", text: "Кафе" },
-        { textId: "", text: "Ресторан" },
-        { textId: "", text: "Стрипфуд" }
+        { id: 1 << 13, text: "Кафе" },
+        { id: 1 << 14, text: "Ресторан" },
+        { id: 1 << 15, text: "Стритфуд" }
     ];
 
     export let strollData = [
-        { textId: "", text: "Фонтаны" },
-        { textId: "", text: "Ракета" },
-        { textId: "", text: "Архитектура" },
-        { textId: "", text: "Пруды" },
-        { textId: "", text: "Ботанический сад" },
+        { id: 1 << 16, text: "Фонтаны" },
+        { id: 1 << 17, text: "Ракета" },
+        { id: 1 << 18, text: "Архитектура" },
+        { id: 1 << 19, text: "Пруды" },
+        { id: 1 << 20, text: "Ботанический сад" },
     ];
 
     export let servicesData = [
-        { textId: "", text: "Инфоцентр" },
-        { textId: "", text: "Туалеты" },
-        { textId: "", text: "Комната матери и ребёнка" },
+        { id: 1 << 21, text: "Инфоцентр" },
+        { id: 1 << 22, text: "Туалеты" },
+        { id: 1 << 23, text: "Комната матери и ребёнка" },
     ]
-        
+    
+    export let checkedInterests = 0;
+
     let expandedItem = "";
 
     function onItemToggled(event) {
@@ -96,7 +99,7 @@
                     >
         {#each exhibitionsData as section}
             <p class="list-item__title">{section.title}</p>
-            <ChipGroup items={section.items} />
+            <IdControlledChipGroup items={section.items} bind:checkedItems={checkedInterests} />
         {/each}
     </ExpandableItem>
 
@@ -105,7 +108,7 @@
                     expanded={expandedItem==="2"} 
                     on:toggle={onItemToggled} 
                     >
-        <ChipGroup items={foodData} />
+        <IdControlledChipGroup items={foodData} bind:checkedItems={checkedInterests} />
     </ExpandableItem>
 
     <ExpandableItem itemId="3" 
@@ -113,7 +116,7 @@
                     expanded={expandedItem==="3"} 
                     on:toggle={onItemToggled} 
                     >
-        <ChipGroup items={strollData} />
+        <IdControlledChipGroup items={strollData} bind:checkedItems={checkedInterests} />
     </ExpandableItem>
 
     <ExpandableItem itemId="4" 
@@ -122,6 +125,6 @@
                     on:toggle={onItemToggled} 
                     addSeparator={false}
                     >
-        <ChipGroup items={servicesData} />
+        <IdControlledChipGroup items={servicesData} bind:checkedItems={checkedInterests} />
     </ExpandableItem>
 </div>

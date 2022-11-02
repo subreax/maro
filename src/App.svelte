@@ -38,11 +38,9 @@
 
 <style>
     nav {
-        position: absolute;
-        top: 0;
-        left: 0;
         background: #212121;
-        z-index: 10;
+        z-index: 100;
+        position: relative;
     }
 
     span {

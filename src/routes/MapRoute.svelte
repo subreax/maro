@@ -170,11 +170,17 @@
     function onMapPlaceDeselected(feature) {
 
     }
+
+    function onPathPropertiesChanged({wishes, interests}) {
+        console.log(`wishes: ${wishes}`);
+        console.log(`interests: ${interests}`);
+    }
+
 </script>
 
 
 <div class="path-tuning-component">
-    <PathTuningComponent />
+    <PathTuningComponent on:apply={(event) => onPathPropertiesChanged(event.detail)} />
 </div>
 
 
