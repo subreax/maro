@@ -2,6 +2,8 @@
     import { CodeInputStyle } from "../components/CodeInputStyle";
     import CodeInputComponent from "../components/CodeInputComponent.svelte";
     import PathTuningComponent from "../components/PathTuningComponent.svelte";
+    import ChipGroup from "../components/ChipGroup.svelte";
+    import Filter from "../components/Filter.svelte";
     
     export let location;
 
@@ -24,3 +26,5 @@
 
 
 <CodeInputComponent bind:style={codeInputStyle} digits={6} on:code={(event) => onCode(event.detail.code)}/>
+
+<Filter />
