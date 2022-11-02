@@ -253,3 +253,24 @@ form {
 .list-item__title:first-child {
     padding-top: 0;
 }
+
+
+.path-tuning-component {
+    position: absolute;
+    top: 5%;
+    left: 10px;
+    z-index: 10;
+    border-radius: 20px;
+    box-shadow: 0 5px 5px #0000002f;
+}
+
+@media screen and (max-width: 500px) {
+    .path-tuning-component {
+        top: 0;
+        left: 0;
+        right: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
+

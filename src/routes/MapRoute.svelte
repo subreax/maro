@@ -179,14 +179,14 @@
 </script>
 
 
-<div class="path-tuning-component">
-    <PathTuningComponent on:apply={(event) => onPathPropertiesChanged(event.detail)} />
-</div>
+<PathTuningComponent className="path-tuning-component" on:apply={(event) => onPathPropertiesChanged(event.detail)} />
 
 
 <div id="map" />
 
 <style>
+    
+
     #map {
         position: absolute;
         top: 0;
@@ -194,10 +194,6 @@
         width: 100%;
     }
 
-    .path-tuning-component {
-        position: absolute;
-        top: 5%;
-        left: 10px;
-        z-index: 10;
-    }
+    
+
 </style>

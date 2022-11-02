@@ -12,6 +12,8 @@
 
     const dispatch = createEventDispatcher();
 
+    export let className = "";
+
 
     let modeSelected = 0;
     let expanded = false;
@@ -54,7 +56,7 @@
 
 </script>
 
-<div class="wrapper">
+<div class="wrapper {className}">
     <div class="status-bar">
         <div class="btn-group">
             <ToggleButton   style="width: 100%; flex: 1" 
@@ -126,18 +128,9 @@
 
 
 <style>
-    @media screen and (min-width: 500px) {
-        .wrapper {
-            width: 460px;
-        }
-    }
-
     .wrapper {
         background: #FAF2EF;
-        max-width: 460px;
         padding: 15px;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
     }
 
     .status-bar {
