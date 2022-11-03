@@ -28,7 +28,7 @@ button {
     outline: none;
     color: #E22C38;
     background: transparent;
-    padding: 0.71rem 1.43rem;
+    padding: 11px 22px;
     border-radius: 10px;
     cursor: pointer;
     white-space: nowrap;
@@ -109,7 +109,7 @@ form {
 }
 
 .btn__icon {
-    padding: 0.71rem;
+    padding: 10px;
 }
 
 
@@ -255,22 +255,69 @@ form {
 }
 
 
-.path-tuning-component {
+/* .path-tuning-component {
     position: absolute;
-    top: 5%;
+    top: 10px;
     left: 10px;
     z-index: 10;
     border-radius: 20px;
-    box-shadow: 0 5px 5px #0000002f;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    width: 30vw;
+    width: 420px;
 }
 
-@media screen and (max-width: 500px) {
+.ptcomponent-content {
+    max-height: calc(100vh - 146px);
+
+    margin: 10px 0; 
+    background: #fff;
+    border-radius: 20px;
+    overflow-y: auto;
+} */
+
+/* @media screen and (max-width: 500px) {
     .path-tuning-component {
         top: 0;
         left: 0;
         right: 0;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
+        width: auto;
+        min-width: 300px;
+        max-height: 100%;
     }
+
+    .ptcomponent-content {
+        max-height: calc(92vh - 126px);
+    }
+} */
+
+.path-tuning-component1 {
+    padding: 8px 15px 15px 15px;
 }
 
+.ptcomponent-content1 {
+    max-height: calc(100vh - 185px);
+    margin: 10px 0; 
+    background: #fff;
+    border-radius: 20px;
+    overflow-y: auto;
+}
+
+.map-menu {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 5;
+
+    width: 454px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 470px) {
+    .map-menu {
+        width: auto;
+        right: 8px;
+    }
+}

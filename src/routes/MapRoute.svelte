@@ -3,11 +3,21 @@
     import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
     import { onMount } from "svelte";
     import PathTuningComponent from "../components/PathTuningComponent.svelte";
+    import MapMenu from "../components/MapMenu.svelte";
 
     mapboxgl.accessToken =
         "pk.eyJ1IjoicmVmcmlnZXJhdG9yMmsiLCJhIjoiY2w5aXUwOGNzMDM2NDNvbzdjdGkzeWR0biJ9.Hbm67L4hmYTKaHYBXXD3DQ";
 
     let map = null;
+
+    const geojsonRoute = {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+            type: 'LineString',
+            coordinates: []
+        }
+    };
 
     const activePlaceGeojson = {
         type: "FeatureCollection",
@@ -23,15 +33,34 @@
         ],
     };
 
+    async function getRoute() {
+        const start = [37.63190639, 55.83163773];
+        const end = [37.616328941817, 55.836326099174];
+
+        const query = await fetch(
+            `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+            { method: 'GET' }
+        );
+        const json = await query.json();
+        const data = json.routes[0];
+        geojsonRoute.geometry.coordinates = data.geometry.coordinates;
+        return geojsonRoute;
+    }
+
     onMount(() => {
         map = new mapboxgl.Map({
             container: "map",
             style: "mapbox://styles/refrigerator2k/cl9r8ojom002u14nygzeui2gi",
             center: [37.624, 55.834],
             zoom: 14,
+            maxBounds: [[ 37.624130 - 0.015, 55.833883 - 0.015 ], [ 37.624130 + 0.015, 55.833883 + 0.015 ]]
         });
 
-        map.on("load", () => {
+        
+
+
+
+        map.on("load", async () => {
             const geojson = getGeoJsonSource();
             activePlaceGeojson.features[0].properties =
                 geojson.features[0].properties;
@@ -52,6 +81,26 @@
                     "circle-stroke-width": 1,
                 },
             });
+
+            map.addLayer({
+                id: "route",
+                type: "line",
+                source: {
+                    type: "geojson",
+                    data: geojsonRoute,
+                },
+                layout: {
+                    "line-join": "round",
+                    "line-cap": "round"
+                },
+                paint: {
+                    "line-color": "#3887be",
+                    "line-width": 5,
+                    "line-opacity": 0.75
+                }
+            });
+            
+            map.getSource("route").setData(await getRoute());
 
             map.addLayer({
                 id: "vdnh-place-icons",
@@ -179,21 +228,22 @@
 </script>
 
 
-<PathTuningComponent className="path-tuning-component" on:apply={(event) => onPathPropertiesChanged(event.detail)} />
+<MapMenu className="map-menu" />
+
+
+<!-- <PathTuningComponent    className="path-tuning-component" 
+                        contentClassName="ptcomponent-content"                        
+                        on:apply={(event) => onPathPropertiesChanged(event.detail)} 
+                        /> -->
 
 
 <div id="map" />
 
 <style>
-    
-
     #map {
         position: absolute;
         top: 0;
         bottom: 0;
         width: 100%;
     }
-
-    
-
 </style>
