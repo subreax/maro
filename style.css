@@ -255,7 +255,7 @@ form {
 }
 
 
-.path-tuning-component {
+/* .path-tuning-component {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -273,9 +273,9 @@ form {
     background: #fff;
     border-radius: 20px;
     overflow-y: auto;
-}
+} */
 
-@media screen and (max-width: 500px) {
+/* @media screen and (max-width: 500px) {
     .path-tuning-component {
         top: 0;
         left: 0;
@@ -290,13 +290,34 @@ form {
     .ptcomponent-content {
         max-height: calc(92vh - 126px);
     }
+} */
+
+.path-tuning-component1 {
+    padding: 8px 15px 15px 15px;
 }
 
-
+.ptcomponent-content1 {
+    max-height: calc(100vh - 185px);
+    margin: 10px 0; 
+    background: #fff;
+    border-radius: 20px;
+    overflow-y: auto;
+}
 
 .map-menu {
     position: absolute;
     top: 8px;
     left: 8px;
     z-index: 5;
+
+    width: 454px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 470px) {
+    .map-menu {
+        width: auto;
+        right: 8px;
+    }
 }

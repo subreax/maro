@@ -238,13 +238,13 @@
 </script>
 
 
-<!-- <MapMenu className="map-menu" /> -->
+<MapMenu className="map-menu" />
 
 
-<PathTuningComponent    className="path-tuning-component" 
+<!-- <PathTuningComponent    className="path-tuning-component" 
                         contentClassName="ptcomponent-content"                        
                         on:apply={(event) => onPathPropertiesChanged(event.detail)} 
-                        />
+                        /> -->
 
 
 <div id="map" />
