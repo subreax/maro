@@ -1,5 +1,4 @@
 <script>
-    import { slide } from "svelte/transition"
     import { createEventDispatcher } from "svelte";
     import ToggleButton from "./ToggleButton.svelte";
     import ExpandableItem from "./ExpandableItem.svelte"
@@ -17,17 +16,10 @@
 
 
     let modeSelected = 0;
-    let expanded = false;
     let expandedItem = "";
 
     let checkedWishes = 0;
     let checkedInterests = 0;
-
-    function contentToggled(val) {
-        expanded = val;
-        expandedItem = "";
-    }
-
 
     function onItemToggled(event) {
         const itemId = event.detail.itemId.toString();
@@ -74,62 +66,57 @@
                 Расширенный
             </ToggleButton>
         </div>
-        
-        <ToggleButton style="margin-left: 16px" className="btn__toggle btn__icon" on:toggle={(event) => contentToggled(event.detail.toggle)}>
-            <i class="fa-solid" class:fa-chevron-down={!expanded} class:fa-chevron-up={expanded}></i>
-        </ToggleButton>
     </div>
 
-    {#if expanded}
-        <div class="expandable-block" transition:slide>
-            <div class="{contentClassName}">
-                <ExpandableItem title="Пожелания"     
-                                itemId="1" 
-                                expanded={expandedItem[0] === "1"}
-                                on:toggle={onItemToggled} 
-                                >
-                    {#if modeSelected === 0}
-                        <SimpleWishesSelector bind:checkedItems={checkedWishes}/>
-                    {:else}
-                        <DetailedWishesSelector bind:checkedWishes={checkedWishes}/>
-                    {/if}
-                </ExpandableItem>
 
-                <ExpandableItem title="Интересы"
-                                itemId="2"
-                                expanded={expandedItem[0] === "2"}
-                                on:toggle={onItemToggled} 
-                                >
-                    {#if modeSelected === 0}
-                        <SimpleInterestsSelector bind:checkedInterests={checkedInterests} />
-                    {:else}
-                        <DetailedInterestsSelector bind:checkedInterests={checkedInterests} />
-                    {/if}
-                </ExpandableItem>
+    <div class="expandable-block">
+        <div class="{contentClassName}">
+            <ExpandableItem title="Пожелания"     
+                            itemId="1" 
+                            expanded={expandedItem[0] === "1"}
+                            on:toggle={onItemToggled} 
+                            >
+                {#if modeSelected === 0}
+                    <SimpleWishesSelector bind:checkedItems={checkedWishes}/>
+                {:else}
+                    <DetailedWishesSelector bind:checkedWishes={checkedWishes}/>
+                {/if}
+            </ExpandableItem>
 
-                <ExpandableItem itemId="3" 
-                                title="Компания" 
-                                expanded={expandedItem[0] === "3"} 
-                                on:toggle={onItemToggled} 
-                                addSeparator={false}
-                                >
-                    <CompanyConfigurer />
-                </ExpandableItem>
-            </div>
+            <ExpandableItem title="Интересы"
+                            itemId="2"
+                            expanded={expandedItem[0] === "2"}
+                            on:toggle={onItemToggled} 
+                            >
+                {#if modeSelected === 0}
+                    <SimpleInterestsSelector bind:checkedInterests={checkedInterests} />
+                {:else}
+                    <DetailedInterestsSelector bind:checkedInterests={checkedInterests} />
+                {/if}
+            </ExpandableItem>
 
-            <div class="buttons">
-                <button on:click|preventDefault={() => onReset()}>Сбросить всё</button>
-                <button class="btn__raised" on:click|preventDefault={() => onApply()}>Применить</button>
-            </div>
+            <ExpandableItem itemId="3" 
+                            title="Компания" 
+                            expanded={expandedItem[0] === "3"} 
+                            on:toggle={onItemToggled} 
+                            addSeparator={false}
+                            >
+                <CompanyConfigurer />
+            </ExpandableItem>
         </div>
-    {/if}
+
+        <div class="buttons">
+            <button on:click|preventDefault={() => onReset()}>Сбросить всё</button>
+            <button class="btn__raised" on:click|preventDefault={() => onApply()}>Применить</button>
+        </div>
+    </div>
+    
 </div>
 
 
 <style>
     .wrapper {
         background: #FAF2EF;
-        padding: 15px;
     }
 
     .status-bar {
@@ -148,10 +135,11 @@
     .buttons {
         display: flex;
         justify-content: center;
-        gap: 14%;
+        gap: 10%;
     }
 
     .buttons button {
-        width: 36%;
+        width: 150px;
+        padding: 11px;
     }
 </style>
