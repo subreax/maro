@@ -13,7 +13,7 @@
 </script>
 
 <Router url="{url}">
-    <nav>
+    <!-- <nav>
         <Link to="/"><span>Explore</span></Link>
         <Link to="auth"><span>Auth</span></Link>
         <Link to="reg"><span>Reg</span></Link>
@@ -22,7 +22,7 @@
         <Link to="forgot-password-phone"><span>ForgotPasswordPhone</span></Link>
         <Link to="new-password"><span>NewPassword</span></Link>
         <Link to="map"><span>Map</span></Link>
-    </nav>
+    </nav> -->
 
     <div>
         <Route path="auth" component={AuthRoute} />

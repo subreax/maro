@@ -3,6 +3,7 @@
     import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
     import { onMount } from "svelte";
     import PathTuningComponent from "../components/PathTuningComponent.svelte";
+    import MapMenu from "../components/MapMenu.svelte";
 
     mapboxgl.accessToken =
         "pk.eyJ1IjoicmVmcmlnZXJhdG9yMmsiLCJhIjoiY2w5aXUwOGNzMDM2NDNvbzdjdGkzeWR0biJ9.Hbm67L4hmYTKaHYBXXD3DQ";
@@ -225,6 +226,9 @@
     }
 
 </script>
+
+
+<!-- <MapMenu className="map-menu" /> -->
 
 
 <PathTuningComponent    className="path-tuning-component" 

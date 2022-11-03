@@ -4,6 +4,7 @@
     import PathTuningComponent from "../components/PathTuningComponent.svelte";
     import ChipGroup from "../components/ChipGroup.svelte";
     import Filter from "../components/Filter.svelte";
+    import MapMenu from "../components/MapMenu.svelte";
     
     export let location;
 
@@ -19,12 +20,5 @@
 
 </script>
 
-<h1>Explore</h1>
 
-
-<PathTuningComponent />
-
-
-<CodeInputComponent bind:style={codeInputStyle} digits={6} on:code={(event) => onCode(event.detail.code)}/>
-
-<Filter />
+<MapMenu className="map-menu" />
