@@ -10,15 +10,6 @@
 
     let map = null;
 
-    const geojsonRoute = {
-        type: 'Feature',
-        properties: {},
-        geometry: {
-            type: 'LineString',
-            coordinates: []
-        }
-    };
-
     const activePlaceGeojson = {
         type: "FeatureCollection",
         features: [
@@ -33,18 +24,55 @@
         ],
     };
 
-    async function getRoute() {
-        const start = [37.63190639, 55.83163773];
-        const end = [37.616328941817, 55.836326099174];
-
+    async function setRoute(points) {
         const query = await fetch(
-            `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+            `https://api.mapbox.com/directions/v5/mapbox/walking/${points.join(";")}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
             { method: 'GET' }
         );
+
+
+        const geojson = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+                type: 'LineString',
+                coordinates: []
+            }
+        };
+
         const json = await query.json();
         const data = json.routes[0];
-        geojsonRoute.geometry.coordinates = data.geometry.coordinates;
-        return geojsonRoute;
+        geojson.geometry.coordinates = data.geometry.coordinates;
+
+        if (map.getSource("route")) {
+            map.getSource("route").setData(geojson);            
+        }
+        else {
+            map.addLayer({
+                id: "route",
+                type: "line",
+                source: {
+                    type: "geojson",
+                    data: geojson,
+                },
+                layout: {
+                    "line-join": "round",
+                    "line-cap": "round"
+                },
+                paint: {
+                    "line-color": "#3887be",
+                    "line-width": 5,
+                    "line-opacity": 0.75
+                }
+            });
+        }
+
+    }
+
+    async function fetchDestinationPoints() {
+        const query = await fetch("http://37.18.121.45:7269/api/Route/build_route/57c40f33-33ef-4a34-8488-5b38cefab6a1", { method: 'GET' });
+        const json = await query.json();
+        return json;
     }
 
     onMount(() => {
@@ -53,7 +81,7 @@
             style: "mapbox://styles/refrigerator2k/cl9r8ojom002u14nygzeui2gi",
             center: [37.624, 55.834],
             zoom: 14,
-            maxBounds: [[ 37.624130 - 0.015, 55.833883 - 0.015 ], [ 37.624130 + 0.015, 55.833883 + 0.015 ]]
+            maxBounds: [[ 37.624130 - 0.03, 55.833883 - 0.03 ], [ 37.624130 + 0.03, 55.833883 + 0.03 ]]
         });
 
         
@@ -80,27 +108,7 @@
                     "circle-stroke-color": "#ffffff",
                     "circle-stroke-width": 1,
                 },
-            });
-
-            map.addLayer({
-                id: "route",
-                type: "line",
-                source: {
-                    type: "geojson",
-                    data: geojsonRoute,
-                },
-                layout: {
-                    "line-join": "round",
-                    "line-cap": "round"
-                },
-                paint: {
-                    "line-color": "#3887be",
-                    "line-width": 5,
-                    "line-opacity": 0.75
-                }
-            });
-            
-            map.getSource("route").setData(await getRoute());
+            });            
 
             map.addLayer({
                 id: "vdnh-place-icons",
@@ -180,6 +188,8 @@
 
                 selectPlace(features[0]);
             });
+
+            setRoute(await fetchDestinationPoints());
         });
     });
 
@@ -213,7 +223,7 @@
 
     function onMapPlaceSelected(feature) {
         map.panTo(feature.geometry.coordinates);
-        console.log(feature);
+        console.log(feature.geometry.coordinates);
     }
 
     function onMapPlaceDeselected(feature) {
