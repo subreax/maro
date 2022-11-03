@@ -12,6 +12,9 @@
 
     const dispatch = createEventDispatcher();
 
+    export let className = "";
+    export let contentClassName = "";
+
 
     let modeSelected = 0;
     let expanded = false;
@@ -54,7 +57,7 @@
 
 </script>
 
-<div class="wrapper">
+<div class="wrapper {className}">
     <div class="status-bar">
         <div class="btn-group">
             <ToggleButton   style="width: 100%; flex: 1" 
@@ -79,9 +82,7 @@
 
     {#if expanded}
         <div class="expandable-block" transition:slide>
-
-            <div style="margin: 10px 0; background: #fff; border-radius: 20px">
-                
+            <div class="{contentClassName}">
                 <ExpandableItem title="Пожелания"     
                                 itemId="1" 
                                 expanded={expandedItem[0] === "1"}
@@ -126,18 +127,9 @@
 
 
 <style>
-    @media screen and (min-width: 500px) {
-        .wrapper {
-            width: 460px;
-        }
-    }
-
     .wrapper {
         background: #FAF2EF;
-        max-width: 460px;
         padding: 15px;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
     }
 
     .status-bar {
