@@ -1,10 +1,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <script>
-    export let checkboxContent, status; 
+    export let checkboxContent;
+    export let status;
+    export let style = "";
+    export let className = "";
 </script>
 
-<div>
+<div class={className} {style}>
   <input type="checkbox" bind:checked={status} id="customCheckbox"/>
   <label  for="customCheckbox">{checkboxContent}</label>
 </div>

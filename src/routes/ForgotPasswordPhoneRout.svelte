@@ -1,58 +1,39 @@
 <script>
-    import Textfield from "../components/Textfield.svelte";
-    let loginInfo;
+    import CodeInputComponent from "../components/CodeInputComponent.svelte";
+    
+    function onCodeEntered(code) {
+
+    }
+
 </script>
 
-<form>
+<form class="auth-container">
     <figure class="emblem">
         <img src="../assets/Logo.svg" alt="" />
     </figure>
 
-    <div class="input">
-        <p class="label">Код отправлен по СМС</p>
-        <div>
-            <Textfield type="text" labelContent={"Код подтверждения"} bind:inputContent={loginInfo}/>
-        </div>
-    </div>
+    
+    <p class="label">Код отправлен по СМС</p>
+    
+    <CodeInputComponent className="align-center" digits={6} on:code={(e) => onCodeEntered(e.detail.code)} />
+    
 
-    <div class="submit">
-        <button class="btn__raised btn-primary" 
-        on:click={(e) => {
-            e.preventDefault();
-        }}>
-            Сбросить пароль
-        </button>
+    <div class="btn-holder">
+        <button class="btn__raised btn-primary">Сбросить пароль</button>
     </div>
 
 </form>
 
 <style>
-
-    .input {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
-
     .label {
-        display: flex;
-        justify-content: center;
-
-        font-weight: 400;
+        text-align: center;
         font-size: 1.5rem;
-        line-height: 47px;
+        line-height: 1.5em;
 
         color: #262626;
     }
 
-    .submit {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        margin-top: 40px;
+    .btn-holder {
+        margin: 32px auto;
     }
 </style>

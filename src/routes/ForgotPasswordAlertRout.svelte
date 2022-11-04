@@ -2,44 +2,29 @@
 
 </script>
 
-<form>
+<form class="auth-container">
     <figure class="emblem">
         <img src="../assets/Logo.svg" alt="" />
     </figure>
 
-    <div>
-        <p class="label">Ссылка на сброс пароля отправлена на почту</p>
-    </div>
+    <p class="label">Ссылка на сброс пароля отправлена на почту</p>
 
-    <div class="submit">
-        <button class="btn__raised btn-primary" 
-        on:click={(e) => {
-            e.preventDefault();
-        }}>
-            На главную
-        </button>
+    <div class="btn-holder">
+        <button class="btn__raised btn-primary">На главную</button>
     </div>
 
 </form>
 
 <style>
     .label {
-        display: flex;
-        justify-content: center;
-
-        font-weight: 400;
+        text-align: center;
         font-size: 1.5rem;
-        line-height: 47px;
+        line-height: 1.5em;
 
         color: #262626;
     }
 
-    .submit {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        margin-top: 40px;
+    .btn-holder {
+        margin: 32px auto;
     }
 </style>

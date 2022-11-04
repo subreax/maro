@@ -3,19 +3,19 @@
     let loginInfo;
 </script>
 
-<form>
+<form class="auth-container">
     <figure class="emblem">
         <img src="../assets/Logo.svg" alt="" />
     </figure>
 
-    <div class="input">
-        <p class="label">Введите почту или номер телефона, который привязан к аккаунту</p>
-        <div>
-            <Textfield type="text" labelContent={"Email или телефон"} bind:inputContent={loginInfo}/>
-        </div>
+    
+    <p class="label">Введите почту или номер телефона, который привязан к аккаунту</p>
+    <div>
+        <Textfield type="text" labelContent={"Email или телефон"} bind:inputContent={loginInfo}/>
     </div>
 
-    <div class="submit">
+
+    <div class="btn-holder">
         <button class="btn__raised btn-primary" 
         on:click={(e) => {
             e.preventDefault();
@@ -23,35 +23,18 @@
             Сбросить пароль
         </button>
     </div>
-
 </form>
 
 <style>
-    .input {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 40px;
-    }
-
     .label {
-        display: flex;
-        align-items: center;
         text-align: center;
-
-        font-weight: 400;
         font-size: 1.5rem;
-        line-height: 47px;
+        line-height: 1.5em;
 
         color: #262626;
     }
 
-    .submit {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        margin-top: 40px;
+    .btn-holder {
+        margin: 32px auto;
     }
 </style>

@@ -4,6 +4,7 @@
     
     const dispatch = createEventDispatcher();
 
+    export let className = "";
     export let digits = 4;
     export let style = CodeInputStyle.NONE;
 
@@ -124,7 +125,7 @@
 
 </script>
 
-<div bind:this={component} on:input={onInputEntered} on:click={onInputClicked}>
+<div class={className} bind:this={component} on:input={onInputEntered} on:click={onInputClicked}>
     {#each Array(digits) as _, i (i)}
         <input  class:correct={style===CodeInputStyle.CORRECT} 
                 class:wrong={style===CodeInputStyle.WRONG} 
