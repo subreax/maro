@@ -1,19 +1,23 @@
 <script>
     import Textfield from "../components/Textfield.svelte";
     import PasswordField from "../components/PasswordField.svelte";
+    import { navigate } from "svelte-routing";
+    import { isEmailValid, isPasswordValid } from "../utils";
+    import { Backend } from "../backend";
     
     let email;
     let password;
     let passwordRepeated;
 
     function signInClicked() {
-        // вход кликнут
-        console.log("sign in")
+        navigate("/signin", { replace: true });
     }
 
     function signUpClicked() {
-        // регистрация кликнута
-        console.log("sign up")
+        const isPwdOk = isPasswordValid(password) && password === passwordRepeated
+        if (isEmailValid(email) && isPwdOk) {
+            Backend.register(email, password);
+        }
     }
 </script>
 

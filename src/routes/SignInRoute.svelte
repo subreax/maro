@@ -2,17 +2,18 @@
     import Textfield from "../components/Textfield.svelte";
     import PasswordField from "../components/PasswordField.svelte";
     import Checkbox from "../components/Checkbox.svelte";
+    import { navigate, Link } from "svelte-routing";
 
     let remember;
-    let email;
+    let login;
     let password;
 
     function signInClicked() {
-        // вход кликнут
+        
     }
 
     function signUpClicked() {
-        // регистрация кликнута
+        navigate("/signup")
     }
 </script>
 
@@ -24,7 +25,7 @@
     <Textfield
         type="text"
         labelContent={"Email или телефон"}
-        bind:inputContent={email}
+        bind:inputContent={login}
     />
     <PasswordField
         idIcon={"icon1"}
@@ -35,16 +36,11 @@
 
     <div class="row">
         <Checkbox checkboxContent="Запомнить меня" bind:status={remember} />
-        <a href="#" style="color: #E22C38; display: block; text-align: center" class="additional-button">Забыли пароль?</a>
+        <Link to="/reset-password" style="color: #E22C38; display: block; text-align: center" class="additional-button">Забыли пароль?</Link>
     </div>
     
-    <button
-        class="btn__raised btn-primary"
-        on:click={(e) => {
-            e.preventDefault();
-            signInClicked();
-        }}
-    >
+    
+    <button class="btn__raised btn-primary" on:click|preventDefault={() => signInClicked()}>
         Войти
     </button>
 
@@ -52,13 +48,7 @@
         <span> или </span>
     </div>
 
-    <button
-        class="btn-secondary"
-        on:click={(e) => {
-            e.preventDefault();
-            signUpClicked();
-        }}
-    >
+    <button class="btn-secondary" on:click|preventDefault={signUpClicked}>
         Зарегистрироваться
     </button>
     

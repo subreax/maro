@@ -52,12 +52,11 @@ button:hover {
     max-width: 500px;
 
     margin: 0 auto;
-    padding: 0 32px;
 
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
+    top: 8px;
+    right: 8px;
+    left: 8px;
     bottom: 10%;
 
     overflow: hidden;
@@ -69,6 +68,7 @@ button:hover {
     max-height: 33%;
     max-width: 33%;
     margin: 32px;
+    margin-top: 0;
 }
 
 .emblem img {
