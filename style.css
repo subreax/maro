@@ -75,7 +75,6 @@ button:hover {
     max-width: 100%;
 }
 
-
 .align-center {
     display: flex;
     justify-content: center;
@@ -246,6 +245,18 @@ button:hover {
 .heading-with-lines::after {
     margin-right: -100%;
     right: -14px;
+}
+
+.label {
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 1.5em;
+
+    color: #262626;
+}
+
+.btn-holder {
+    margin: 32px auto;
 }
 
 .list-item__title {

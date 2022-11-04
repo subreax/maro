@@ -56,20 +56,4 @@
             </button>
         </div>
     {/if}
-
 </form>
-
-<style>
-    .label {
-        text-align: center;
-        font-size: 1.5rem;
-        line-height: 1.5em;
-        margin-bottom: 16px;
-
-        color: #262626;
-    }
-
-    .btn-holder {
-        margin: 8px auto;
-    }
-</style>

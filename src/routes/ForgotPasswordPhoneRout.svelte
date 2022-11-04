@@ -28,16 +28,4 @@
         font-weight: 400;
         margin-bottom: 32px;
     }
-
-    .label {
-        text-align: center;
-        font-size: 1.5rem;
-        line-height: 1.5em;
-
-        color: #262626;
-    }
-
-    .btn-holder {
-        margin: 32px auto;
-    }
 </style>
