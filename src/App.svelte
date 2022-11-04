@@ -8,23 +8,25 @@
     import MapRoute from "./routes/MapRoute.svelte";
     import NewPasswordRoute from "./routes/NewPasswordRoute.svelte";
     import RegRoute from "./routes/RegRoute.svelte";
+    import Header from "./components/Header.svelte";
 
     export let url = "";
 </script>
 
-<Router url="{url}">
-    <!-- <nav>
-        <Link to="/"><span>Explore</span></Link>
-        <Link to="auth"><span>Auth</span></Link>
-        <Link to="reg"><span>Reg</span></Link>
-        <Link to="forgot-password"><span>ForgotPassword</span></Link>
-        <Link to="forgot-password-alert"><span>ForgotPasswordAlert</span></Link>
-        <Link to="forgot-password-phone"><span>ForgotPasswordPhone</span></Link>
-        <Link to="new-password"><span>NewPassword</span></Link>
-        <Link to="map"><span>Map</span></Link>
-    </nav> -->
-
-    <div>
+<div class="route-container">
+    <Router url="{url}">
+        <!-- <nav>
+            <Link to="/"><span>Explore</span></Link>
+            <Link to="auth"><span>Auth</span></Link>
+            <Link to="reg"><span>Reg</span></Link>
+            <Link to="forgot-password"><span>ForgotPassword</span></Link>
+            <Link to="forgot-password-alert"><span>ForgotPasswordAlert</span></Link>
+            <Link to="forgot-password-phone"><span>ForgotPasswordPhone</span></Link>
+            <Link to="new-password"><span>NewPassword</span></Link>
+            <Link to="map"><span>Map</span></Link>
+        </nav> -->
+    
+        
         <Route path="auth" component={AuthRoute} />
         <Route path="map" component={MapRoute} />
         <Route path="reg" component={RegRoute} />
@@ -33,8 +35,9 @@
         <Route path="forgot-password-phone" component={ForgotPasswordPhoneRout} />
         <Route path="new-password" component={NewPasswordRoute} />
         <Route path="/" component={ExploreRoute} />
-    </div>
-</Router>
+    </Router>
+</div>
+
 
 <style>
     nav {
@@ -52,4 +55,13 @@
     span:hover {
         color: #ff9800;
     }
+
+    .route-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
 </style>
