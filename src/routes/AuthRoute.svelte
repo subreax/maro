@@ -16,50 +16,65 @@
     }
 </script>
 
-<form>
+<form class="container">
     <figure class="emblem">
         <img src="/assets/Logo.svg" alt="" />
     </figure>
 
     <div class="fields">
         <div class="textfields">
-            <Textfield type="text" labelContent={"Email или телефон"} bind:inputContent={email}/>
-            <PasswordField idIcon={"icon1"} idPassword={"passwordWrite"} labelContent={"Пароль"} bind:inputContent={password}/>
+            <Textfield
+                type="text"
+                labelContent={"Email или телефон"}
+                bind:inputContent={email}
+            />
+            <PasswordField
+                idIcon={"icon1"}
+                idPassword={"passwordWrite"}
+                labelContent={"Пароль"}
+                bind:inputContent={password}
+            />
         </div>
 
         <div class="additional-buttons">
-            <Checkbox checkboxContent="Запомнить меня" bind:status={remember}/>
-            <a href="" style="color: #E22C38;" class="additional-button">Забыли пароль?</a>
+            <Checkbox checkboxContent="Запомнить меня" bind:status={remember} />
+            <a href="" style="color: #E22C38;" class="additional-button"
+                >Забыли пароль?</a
+            >
         </div>
     </div>
 
+        <div class="buttons">
+            <button
+                class="btn__raised btn-primary"
+                on:click={(e) => {
+                    e.preventDefault();
+                    signInClicked();
+                }}
+            >
+                Войти
+            </button>
 
-    <div class="buttons">
-        <button class="btn__raised btn-primary" 
-        on:click={(e) => {
-            e.preventDefault();
-            signInClicked();
-        }}>
-            Войти
-        </button>
+            <div class="btn-guest__container">
+                <a href="" style="color: #E22C38;" class="additional-button"
+                    >Продолжить как гость</a
+                >
+            </div>
 
-        <div class="btn-guest__container">
-            <a href="" style="color: #E22C38;" class="additional-button">Продолжить как гость</a>
+            <div class="heading-with-lines">
+                <span> или </span>
+            </div>
+
+            <button
+                class="btn-secondary"
+                on:click={(e) => {
+                    e.preventDefault();
+                    signUpClicked();
+                }}
+            >
+                Регистрация
+            </button>
         </div>
-
-        <div class="heading-with-lines">
-            <span> или </span>
-        </div>
-
-        <button class="btn-secondary" 
-        on:click={(e) => {
-            e.preventDefault();
-            signUpClicked();
-        }}>
-            Регистрация
-        </button>
-
-    </div>
 </form>
 
 <style>
@@ -67,6 +82,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        width: 100%;
 
         margin-top: 41px;
         gap: 30px;
@@ -83,15 +99,23 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-
         padding: 0 40px;
         gap: 20px;
     }
 
-    .buttons {
-        display: grid;
-        justify-content: center;
+    @media (max-width: 444px) {
+        .additional-buttons {
+            padding: 0px;
+        }    
+    }
 
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        width: 370px;
         grid-row-gap: 20px;
         margin-top: 40px;
     }

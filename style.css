@@ -45,7 +45,6 @@ form {
     flex-direction: column;
     justify-content: center;
 
-    height: 100vh;
     min-height: 700px;
 
     min-width: 300px;
@@ -54,6 +53,49 @@ form {
     margin: 0 auto;
     padding: 0 32px;
 }
+
+.container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.emblem {
+    display: flex;
+    position: relative;
+    align-self: center;
+    margin-bottom: 30px;
+    max-height: 33%;
+    max-width: 33%;
+}
+
+.emblem img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/* @media (max-width: 1280px) {
+    form {
+        max-height: 400px;
+    }
+} */
+    
+/* @media (max-width: 767px) {
+    form {
+        max-width: 400px;
+    }
+} */
+
+
+@media (min-height: 700px){
+    form {
+    }
+}
+
 
 .btn__raised {
     color: white;
@@ -128,7 +170,7 @@ form {
 }
 
 .field {
-    height: 60px;
+    min-height: 60px;
     width: 100%;
     position: relative;
 }
@@ -226,15 +268,6 @@ form {
     margin-right: -100%;
     right: -14px;
 }
-
-.emblem {
-    margin: 0 auto;
-    margin-bottom: 30px;
-
-    max-width: 179px;
-    max-height: 197px;
-}
-
 
 .list-item__title {
     font-size: 1rem;
