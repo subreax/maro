@@ -1,3 +1,8 @@
+:root {
+    --header-height: 72px;
+    --color-primary: #E22C38;
+}
+
 body {
     font-family: Roboto, Arial, Helvetica, sans-serif;
     margin: 0;
@@ -9,7 +14,7 @@ p, h1, h2, h3, h4, h5, h6, hr {
     margin: 0;
 }
 
-label, button, input {
+p, label, button, input {
     font-size: 1rem;
     line-height: 1rem;
 }
@@ -26,7 +31,7 @@ button {
     font-weight: 600;
     border: none;
     outline: none;
-    color: #E22C38;
+    color: var(--color-primary);
     background: transparent;
     padding: 11px 22px;
     border-radius: 10px;
@@ -84,7 +89,7 @@ button:hover {
 
 .btn__raised {
     color: white;
-    background: #E22C38;
+    background: var(--color-primary);
 }
 
 .btn__raised:hover {
@@ -132,7 +137,7 @@ button:hover {
 
 .btn__toggle.btn__toggle--active {
     color: white;
-    background: #E22C38;
+    background: var(--color-primary);
 }
 
 .btn__icon {
@@ -145,13 +150,11 @@ button:hover {
     color: #262626;
     font-weight: 600;
     border-radius: 8px;
-    /* border: 1px solid transparent; */
 }
 
 .btn__chip.btn__chip--toggled {    
-    /* border-color: #E22C387f; */
     background: #e22c381f;
-    color: #e22c38 
+    color: var(--color-primary); 
 }
 
 .field {
@@ -199,7 +202,7 @@ button:hover {
 }
 
 .additional-button {
-    color: #E22C38;
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: 600;
 }
@@ -267,43 +270,6 @@ button:hover {
 }
 
 
-/* .path-tuning-component {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 10;
-    border-radius: 20px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-    width: 30vw;
-    width: 420px;
-}
-
-.ptcomponent-content {
-    max-height: calc(100vh - 146px);
-
-    margin: 10px 0; 
-    background: #fff;
-    border-radius: 20px;
-    overflow-y: auto;
-} */
-
-/* @media screen and (max-width: 500px) {
-    .path-tuning-component {
-        top: 0;
-        left: 0;
-        right: 0;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        width: auto;
-        min-width: 300px;
-        max-height: 100%;
-    }
-
-    .ptcomponent-content {
-        max-height: calc(92vh - 126px);
-    }
-} */
-
 .path-tuning-component1 {
     padding: 8px 15px 15px 15px;
 }
@@ -314,6 +280,11 @@ button:hover {
     background: #fff;
     border-radius: 20px;
     overflow-y: auto;
+}
+
+.floating-component-bg {
+    background: #FAF2EF;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .map-menu {
@@ -327,9 +298,44 @@ button:hover {
     overflow: hidden;
 }
 
+.map-header {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 5;
+
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.map-header p {
+    height: 16px;
+}
+
 @media screen and (max-width: 470px) {
     .map-menu {
         width: auto;
         right: 8px;
     }
+}
+
+
+
+#map canvas {
+    outline: none;
+}
+
+header {
+    height: var(--header-height);
+    background: var(--color-primary);
+}
+
+header .logo {
+    width: 48px;
+    height: 48px;
+}
+
+header .logo path {
+    fill: white;
+    
 }

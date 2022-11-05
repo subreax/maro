@@ -1,9 +1,9 @@
 <script>
     import "mapbox-gl/dist/mapbox-gl.css";
-    import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
+    import mapboxgl from "mapbox-gl";
     import { onMount } from "svelte";
-    import PathTuningComponent from "../components/PathTuningComponent.svelte";
     import MapMenu from "../components/MapMenu.svelte";
+    import MapHeader from "../components/MapHeader.svelte";
 
     mapboxgl.accessToken =
         "pk.eyJ1IjoicmVmcmlnZXJhdG9yMmsiLCJhIjoiY2w5aXUwOGNzMDM2NDNvbzdjdGkzeWR0biJ9.Hbm67L4hmYTKaHYBXXD3DQ";
@@ -53,7 +53,7 @@
             style: "mapbox://styles/refrigerator2k/cl9r8ojom002u14nygzeui2gi",
             center: [37.624, 55.834],
             zoom: 14,
-            maxBounds: [[ 37.624130 - 0.015, 55.833883 - 0.015 ], [ 37.624130 + 0.015, 55.833883 + 0.015 ]]
+            maxBounds: [[ 37.624130 - 0.03, 55.833883 - 0.03 ], [ 37.624130 + 0.03, 55.833883 + 0.03 ]]
         });
 
         
@@ -227,23 +227,29 @@
 
 </script>
 
+<div class="map-container">
+    <MapMenu className="floating-component-bg map-menu" />
+    <MapHeader className="floating-component-bg map-header" isSignedIn={false} />
+    <div id="map" />
+</div>
 
-<MapMenu className="map-menu" />
-
-
-<!-- <PathTuningComponent    className="path-tuning-component" 
-                        contentClassName="ptcomponent-content"                        
-                        on:apply={(event) => onPathPropertiesChanged(event.detail)} 
-                        /> -->
-
-
-<div id="map" />
 
 <style>
     #map {
         position: absolute;
-        top: 0;
-        bottom: 0;
         width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        outline: none;
+    }
+
+    .map-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        outline: none;
     }
 </style>
