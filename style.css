@@ -323,14 +323,18 @@ button:hover {
     height: 16px;
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (max-width: 680px) {
+    .map-header {
+        right: 8px;
+        left: 8px;
+    }
+    
     .map-menu {
+        top: 64px;
         width: auto;
         right: 8px;
     }
 }
-
-
 
 #map canvas {
     outline: none;
