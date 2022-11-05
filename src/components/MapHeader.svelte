@@ -4,36 +4,33 @@
     const dispatch = createEventDispatcher();
 
     export let className = "";
-    export let name = "Дмитрий Морозов";
+    export let name = "";
     export let isSignedIn = true;
 
-    function onSignInClicked() {
-        dispatch("signin");
-    }
-
-    function onSignOutClicked() {
-        dispatch("signout");
+    function authClicked() {
+        if (isSignedIn) {
+            dispatch("signout");
+        } else {
+            dispatch("signin");
+        }
     }
 
 </script>
 
 
-<div class={className}>
-    {#if isSignedIn}
-    <div class="header">
-        <div class="circle"></div>
-        <p class="username">{name}</p>
-        <button style="padding: 16px 32px;" on:click|preventDefault={() => onSignOutClicked()}>
+<div class="header {className}">
+    <div class="avatar"></div>
+    <p class="username">{name}</p>
+
+    <button style="padding: 16px 32px;" on:click|preventDefault={authClicked}>
+        {#if isSignedIn}
             Выйти 
             <i style="margin-left: 8px;" class="fa-solid fa-right-from-bracket"></i>
-        </button>
-    </div>
-    {:else}
-        <button style="padding: 16px 32px;" on:click|preventDefault={() => onSignInClicked()}>
+        {:else}
             Войти
             <i style="margin-left: 8px;" class="fa-solid fa-right-to-bracket"></i>
-        </button>
-    {/if}
+        {/if}
+    </button>
 </div>
 
 <style>
@@ -44,7 +41,7 @@
         padding: 0px 0px 0px 5px;
     }
 
-    .circle {
+    .avatar {
         width: 40px; 
         height: 40px;
         margin-right: 12px;
