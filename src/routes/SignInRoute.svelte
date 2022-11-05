@@ -11,13 +11,12 @@
 
     function signInClicked() {
         Backend.signIn(login, password, remember)
-            .then(async response => {
-                if (response.ok) {
+            .then(async isOk => {
+                if (isOk) {
                     navigate("/map", {replace: true});
                 }
                 else {
-                    console.error(response);
-                    console.error(await response.text());
+                    console.error("Failed to sign in");
                 }
             });
     }
