@@ -3,13 +3,23 @@
     import PasswordField from "../components/PasswordField.svelte";
     import Checkbox from "../components/Checkbox.svelte";
     import { navigate, Link } from "svelte-routing";
+    import { Backend } from "../backend";
 
     let remember;
     let login;
     let password;
 
     function signInClicked() {
-        
+        Backend.signIn(login, password, remember)
+            .then(async response => {
+                if (response.ok) {
+                    navigate("/map", {replace: true});
+                }
+                else {
+                    console.error(response);
+                    console.error(await response.text());
+                }
+            });
     }
 
     function signUpClicked() {

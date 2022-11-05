@@ -230,7 +230,7 @@
 
 <div class="map-container">
     <MapMenu className="floating-component-bg map-menu" />
-    <MapHeader className="floating-component-bg map-header" isSignedIn={true} on:signin={() => navigate("/signin")} />
+    <MapHeader className="floating-component-bg map-header" isSignedIn={false} name="Гость" on:signin={() => navigate("/signin")} />
     <div id="map" />
 </div>
 

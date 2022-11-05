@@ -8,3 +8,7 @@ export function isPasswordValid(password) {
     return true;
 }
 
+export function parseGetParams(searchUrl) {
+    const urlSearchParams = new URLSearchParams(searchUrl);
+    return Object.fromEntries(urlSearchParams.entries());
+}

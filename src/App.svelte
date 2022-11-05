@@ -30,7 +30,7 @@
         <Route path="confirm" component={ConfirmRoute} />
         <Route path="reset-password" component={ForgotPasswordRoute} />
         <Route path="reset-password-phone" component={ForgotPasswordPhoneRout} />
-        <Route path="new-password" component={NewPasswordRoute} />
+        <Route path="reset_password" component={NewPasswordRoute} />
         <Route path="map" component={MapRoute} />
     </div>
 </Router>

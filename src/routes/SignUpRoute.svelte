@@ -9,6 +9,8 @@
     let password;
     let passwordRepeated;
 
+    let isSignUpPressed = true;
+
     function signInClicked() {
         navigate("/signin", { replace: true });
     }
@@ -16,7 +18,17 @@
     function signUpClicked() {
         const isPwdOk = isPasswordValid(password) && password === passwordRepeated
         if (isEmailValid(email) && isPwdOk) {
-            Backend.register(email, password);
+            Backend.signUp(email, password)
+                .then(async response => {
+                    if (response.ok) {
+                        isSignUpPressed = true;
+                    } 
+                    else {
+                        console.error("Failed to sign up");
+                        console.error(response);
+                        console.error(await response.text());
+                    }
+                });
         }
     }
 </script>
@@ -25,6 +37,8 @@
     <picture class="emblem">
         <img src="../assets/Logo.svg" alt="" />
     </picture>
+
+    {#if !isSignUpPressed}
 
     <Textfield
         type="text"
@@ -56,4 +70,17 @@
         Войти
     </button>
     
+    {:else}
+        <p class="label">Чтобы завершить регистрацию, подтвердите свой аккаунт. На указанную почту отправлено письмо с дальнейшими указаниями.</p>
+        <div class="btn-holder">
+            <button class="btn__raised btn-primary" on:click|preventDefault={() => navigate("/signin", { replace: true })}>Вернуться</button>
+        </div>
+    {/if}
+
 </form>
+
+<style>
+    .btn-holder {
+        margin: 8px auto;
+    }
+</style>

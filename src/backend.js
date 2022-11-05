@@ -46,5 +46,13 @@ export const Backend = {
 
     resetPassword: async (login) => {
         return await _get(`/api/auth/forgot_password?arg=${login}&host=${_hostUrl}`)
-    }
+    },
+
+    confirmNewPwd: async (login, newpwd, code) => {
+        return await _post("/api/auth/reset_password", {
+            arg: login,
+            code: code,
+            password: newpwd
+        });
+    },
 };
