@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import MapMenu from "../components/MapMenu.svelte";
     import MapHeader from "../components/MapHeader.svelte";
+    import { navigate } from "svelte-routing";
 
     mapboxgl.accessToken =
         "pk.eyJ1IjoicmVmcmlnZXJhdG9yMmsiLCJhIjoiY2w5aXUwOGNzMDM2NDNvbzdjdGkzeWR0biJ9.Hbm67L4hmYTKaHYBXXD3DQ";
@@ -229,7 +230,7 @@
 
 <div class="map-container">
     <MapMenu className="floating-component-bg map-menu" />
-    <MapHeader className="floating-component-bg map-header" isSignedIn={false} />
+    <MapHeader className="floating-component-bg map-header" isSignedIn={true} on:signin={() => navigate("/signin")} />
     <div id="map" />
 </div>
 

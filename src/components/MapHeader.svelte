@@ -4,33 +4,35 @@
     const dispatch = createEventDispatcher();
 
     export let className = "";
-    export let name = "Карта я карта";
+    export let name = "Дмитрий Морозов";
     export let isSignedIn = true;
+
     function onSignInClicked() {
         dispatch("signin");
     }
-    function onSignOutClicked() {
 
+    function onSignOutClicked() {
+        dispatch("signout");
     }
+
 </script>
 
-<p>{name}</p>
-<div class={className}>
-    {#if isSignedIn = true}
-    <div class="header">
-        <div class="circle">
 
-        </div>
+<div class={className}>
+    {#if isSignedIn}
+    <div class="header">
+        <div class="circle"></div>
         <p class="username">{name}</p>
-        <button style="padding: 16px 32px;" on:click={() => onSignOutClicked()}
-            >Выйти <i
-                style="margin-left: 8px;"
-                class="fa-solid fa-arrow-right-to-bracket"
-            /></button
-        >
+        <button style="padding: 16px 32px;" on:click|preventDefault={() => onSignOutClicked()}>
+            Выйти 
+            <i style="margin-left: 8px;" class="fa-solid fa-right-from-bracket"></i>
+        </button>
     </div>
     {:else}
-        <button style="padding: 16px 32px;" on:click={() => onSignInClicked()}>Войти <i style="margin-left: 8px;" class="fa-solid fa-arrow-right-to-bracket"></i></button>
+        <button style="padding: 16px 32px;" on:click|preventDefault={() => onSignInClicked()}>
+            Войти
+            <i style="margin-left: 8px;" class="fa-solid fa-right-to-bracket"></i>
+        </button>
     {/if}
 </div>
 
