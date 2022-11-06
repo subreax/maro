@@ -323,7 +323,28 @@ button:hover {
     height: 16px;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 850px) and (min-width: 520px) {
+    .map-header {
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        width: auto;
+        max-width: 500px;
+    }
+    
+    .map-menu {
+        top: 64px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        width: auto;
+        max-width: 500px;
+    }
+}
+
+@media screen and (max-width: 520px) {
     .map-header {
         right: 8px;
         left: 8px;
@@ -338,6 +359,7 @@ button:hover {
         max-width: 500px;
     }
 }
+
 
 
 
