@@ -7,8 +7,9 @@
     import { Nav } from "../navigation";
     import Logo from "../assets/Logo.svg"
 
-    let userName;
-    let userAge;
+    let firstname;
+    let lastname;
+    let age;
 
     export let location;
     $: params = parseGetParams(location.search);
@@ -19,14 +20,20 @@
         Backend.confirmRegistration(params.userId, params.code)
             .then(async (response) => {
                 if (response.ok) {
-                    navigate(Nav.MAP, { replace: true });
+                    Backend.addUserDetails(params.userId, firstname, lastname, age)
+                    .then( async () => {
+                        navigate(Nav.MAP, { replace: true });
+                    })
+                    .catch((response2) => {
+                        hasErrors = true;
+                        console.error(response2.text());
+                    })
                 } else {
                     hasErrors = true;
                     console.log(await response.text());
                 }
             });
     }
-
 </script>
 
 <form class="auth-container">
@@ -42,19 +49,27 @@
         <Textfield 
             type="text"
             labelContent={"Ваше имя"}
-            bind:inputContent={userName}
+            bind:inputContent={firstname}
+        />
+
+        <Textfield 
+            type="text"
+            labelContent={"Ваша фамилия"}
+            bind:inputContent={lastname}
         />
 
         <Numberfield
             labelContent={"Ваш возраст"}
-            bind:inputContent={userAge}
+            bind:inputContent={age}
         />
 
         <button class="btn__raised btn-primary" style="margin-top: 8px;" on:click|preventDefault={confirmRegistration}>
             Подтвердить
         </button>
     {:else}
-        <h2>Не удалось подтвердить аккаунт</h2>
-        <Link to={Nav.SIGN_IN}>Назад</Link>
+        <h2 class="label">Не удалось подтвердить аккаунт</h2>
+        <Link to={Nav.SIGN_IN}>
+            Назад
+        </Link>
     {/if}
 </form>

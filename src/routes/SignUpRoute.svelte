@@ -44,7 +44,7 @@
 
     <Textfield
         type="text"
-        labelContent={"Email или телефон"}
+        labelContent={"Email"}
         bind:inputContent={email}
     />
     <PasswordField

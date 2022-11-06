@@ -39,9 +39,9 @@
     </figure>
 
     {#if !isPasswordReset} 
-        <p class="label">Введите почту или номер телефона, который привязан к аккаунту</p>
+        <p class="label">Введите почту, которая привязана к аккаунту</p>
 
-        <Textfield type="text" labelContent={"Email или телефон"} bind:inputContent={login} />
+        <Textfield type="text" labelContent={"Email"} bind:inputContent={login} />
 
         <div class="btn-holder">
             <button class="btn__raised btn-primary" 

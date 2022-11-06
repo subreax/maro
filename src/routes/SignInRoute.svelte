@@ -18,6 +18,7 @@
                     navigate(Nav.MAP, {replace: true});
                 }
                 else {
+                    alert("Войти не удалось");
                     console.error("Failed to sign in");
                 }
             });
@@ -35,7 +36,7 @@
 
     <Textfield
         type="text"
-        labelContent={"Email или телефон"}
+        labelContent={"Email"}
         bind:inputContent={login}
     />
     <PasswordField
