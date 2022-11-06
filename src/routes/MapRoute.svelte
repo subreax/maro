@@ -12,6 +12,7 @@
         "pk.eyJ1IjoicmVmcmlnZXJhdG9yMmsiLCJhIjoiY2w5aXUwOGNzMDM2NDNvbzdjdGkzeWR0biJ9.Hbm67L4hmYTKaHYBXXD3DQ";
 
     let map = null;
+    let places;
 
     const activePlaceGeojson = {
         type: "FeatureCollection",
@@ -27,13 +28,7 @@
         ],
     };
 
-    async function setRoute(points) {
-        const query = await fetch(
-            `https://api.mapbox.com/directions/v5/mapbox/walking/${points.join(";")}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
-            { method: 'GET' }
-        );
-
-
+    async function setRoute(route = {}) {
         const geojson = {
             type: 'Feature',
             properties: {},
@@ -43,9 +38,17 @@
             }
         };
 
-        const json = await query.json();
-        const data = json.routes[0];
-        geojson.geometry.coordinates = data.geometry.coordinates;
+        let places = [];
+        if (route.ok === true && route.places) {
+            places = Object.values(route.places);
+        }
+
+        if (places.length > 0) {
+            const query = await fetch(route.link);
+            const json = await query.json();
+            const data = json.routes[0];
+            geojson.geometry.coordinates = data.geometry.coordinates;
+        }
 
         if (map.getSource("route")) {
             map.getSource("route").setData(geojson);            
@@ -69,13 +72,6 @@
                 }
             });
         }
-
-    }
-
-    async function fetchDestinationPoints() {
-        const query = await fetch("http://37.18.121.45:7269/api/Route/build_route/57c40f33-33ef-4a34-8488-5b38cefab6a1", { method: 'GET' });
-        const json = await query.json();
-        return json;
     }
 
     onMount(() => {
@@ -84,16 +80,13 @@
             style: "mapbox://styles/refrigerator2k/cl9r8ojom002u14nygzeui2gi",
             center: [37.624, 55.834],
             zoom: 14,
-            maxBounds: [[ 37.624130 - 0.03, 55.833883 - 0.03 ], [ 37.624130 + 0.03, 55.833883 + 0.03 ]]
+            //maxBounds: [[ 37.624130 - 0.03, 55.833883 - 0.03 ], [ 37.624130 + 0.03, 55.833883 + 0.03 ]]
         });
-
-        
-
 
 
         map.on("load", async () => {
-            const geojsonxx = await Backend.getMapPoints();
-            map.addSource("places", geojsonxx);
+            places = await Backend.getMapPoints();
+            map.addSource("places", places);
 
             map.addLayer({
                 id: "vdnh-place-points",
@@ -105,6 +98,9 @@
                     "circle-stroke-color": "#ffffff",
                     "circle-stroke-width": 1,
                 },
+                filter: [
+                    "==", ["to-boolean", ["get", "isVisible"]], true
+                ]
             });            
 
             map.addLayer({
@@ -127,6 +123,10 @@
                     "text-halo-color": "#ffffff",
                     "text-halo-width": 1,
                 },
+
+                filter: [
+                    "==", ["to-boolean", ["get", "isVisible"]], true
+                ]
             });
 
             map.addSource("active-place", {
@@ -186,7 +186,7 @@
                 selectPlace(features[0]);
             });
 
-            setRoute(await fetchDestinationPoints());
+            clearFilter();
         });
     });
 
@@ -209,7 +209,7 @@
 
     function onMapPlaceSelected(feature) {
         map.panTo(feature.geometry.coordinates);
-        console.log(feature.geometry.coordinates);
+        console.log(feature);
     }
 
     function onMapPlaceDeselected(feature) {
@@ -219,16 +219,46 @@
     function makeNewRoute(event) {
         const interests = event.detail.interests;
         const wishes = event.detail.wishes;
-        Backend.getMapRoute(interests, wishes)
-            .then(route => {
 
-            });
+        if (interests !== 0) {
+            Backend.getMapRoute(interests, wishes, mapboxgl.accessToken)
+                .then(route => {
+                    applyFilter(route);
+                    setRoute(route);
+                });
+        }
+        else {
+            onReset();
+        }
+
+    }
+
+    function applyFilter(route) {
+        places.data.features.forEach((place) => {
+            const isVisible = route.places[place.id] !== undefined;
+            place.properties.isVisible = isVisible;
+        });
+
+        map.getSource("places").setData(places.data);
+    }
+
+    function clearFilter() {
+        places.data.features.forEach((place) => {
+            place.properties.isVisible = true;
+        });
+
+        map.getSource("places").setData(places.data);
+    }
+
+    function onReset() {
+        clearFilter();
+        setRoute();
     }
 
 </script>
 
 <div class="map-container">
-    <MapMenu className="floating-component-bg map-menu" on:newroute={makeNewRoute} />
+    <MapMenu className="floating-component-bg map-menu" on:newroute={makeNewRoute} on:reset={onReset} />
     <MapHeader className="floating-component-bg map-header" isSignedIn={Backend.isSignedIn()} name="Гость" on:signin={() => navigate(Nav.SIGN_IN)} />
     <div id="map" />
 </div>

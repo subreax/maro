@@ -119,8 +119,8 @@ export const Backend = {
         return await query.json();
     },
 
-    getMapRoute: async (interests, wishes) => {
-        const query = await fetch(`${_mapBackHost}/route?interests=${interests}&wishes=${wishes}`);
+    getMapRoute: async (interests, wishes, mapboxgl_token) => {
+        const query = await fetch(`${_mapBackHost}/route?interests=${interests}&wishes=${wishes}&mapboxgl-token=${mapboxgl_token}`);
         return await query.json()
     }
 };

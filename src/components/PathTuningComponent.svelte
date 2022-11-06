@@ -45,6 +45,7 @@
     function onReset() {
         checkedWishes = 0;
         checkedInterests = 0;
+        dispatch("reset");
     }
 
 </script>

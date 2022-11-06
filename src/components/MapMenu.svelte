@@ -12,6 +12,11 @@
     function onApply(event) {
         dispatch("newroute", event.detail);
     }
+
+    function onReset() {
+        dispatch("reset");
+    }
+
 </script>
 
 
@@ -36,7 +41,7 @@
             </div>
             <p class="title">Построение маршрута</p>
         </div>
-        <PathTuningComponent className="path-tuning-component1" contentClassName="ptcomponent-content1" on:apply={onApply} />
+        <PathTuningComponent className="path-tuning-component1" contentClassName="ptcomponent-content1" on:apply={onApply} on:reset={onReset} />
     {/if}
 </div>
 
