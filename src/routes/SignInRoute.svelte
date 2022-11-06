@@ -7,15 +7,25 @@
     import { Nav } from "../navigation";
     import Logo from "../assets/Logo.svg"
 
+    export let location;
+
     let remember;
-    let login;
-    let password;
+    let login = ""
+    let password = ""
 
     function signInClicked() {
         Backend.signIn(login, password, remember)
             .then(async isOk => {
                 if (isOk) {
-                    navigate(Nav.MAP, {replace: true});
+                    const isFirstSignIn = await Backend.isFirstSignIn();
+                    console.log(`isFirstSignIn: ${isFirstSignIn}`)
+
+                    if (isFirstSignIn) {
+                        navigate(Nav.ENTER_USER_DETAILS, { replace: true });
+                    }
+                    else {
+                        navigate(Nav.MAP, { replace: true });
+                    }
                 }
                 else {
                     alert("Войти не удалось");
@@ -64,7 +74,7 @@
         Зарегистрироваться
     </button>
     
-    <a href="#" style="color: #E22C38; display: block; text-align: center; margin-top: 16px;" class="additional-button">Продолжить как гость</a>
+    <Link to={Nav.MAP} style="color: #E22C38; display: block; text-align: center; margin-top: 16px;" class="additional-button">Продолжить как гость</Link>
 </form>
 
 <style>

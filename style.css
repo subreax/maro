@@ -259,7 +259,7 @@ button:hover {
 }
 
 .btn-holder {
-    margin: 32px auto;
+    margin: 8px auto;
 }
 
 .list-item__title {
@@ -323,18 +323,23 @@ button:hover {
     height: 16px;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 850px) {
     .map-header {
         right: 8px;
         left: 8px;
+        width: auto;
+        max-width: 500px;
     }
     
     .map-menu {
         top: 64px;
-        width: auto;
         right: 8px;
+        width: auto;
+        max-width: 500px;
     }
 }
+
+
 
 #map canvas {
     outline: none;

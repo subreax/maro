@@ -1,27 +1,31 @@
-//const _mapBackHost = "http://37.18.121.45:3000";
-const _mapBackHost = "http://127.0.0.1:3000";
+const _mapBackHost = "http://37.18.121.45:3000";
+//const _mapBackHost = "http://127.0.0.1:3000";
 const _hostUrl = "http://192.168.0.100:5173";
 
-let _accessToken = undefined;
+let _accessToken = "";
 let _userId = "";
-
 
 function _buildUrl(path) {
     return `http://37.18.121.45:7269${path}`;
 }
 
 async function _get(path) {
-    return fetch(_buildUrl(path));
+    return fetch(_buildUrl(path), {
+        headers: {
+            "Authorization": `Bearer ${_accessToken}`
+        }
+    });
 }
 
 async function _post(path, body = {}) {
     const json = JSON.stringify(body);
-    console.log(json);
+    //console.log(json);
 
     return fetch(_buildUrl(path), {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json;charset=utf-8',
+            "Authorization": `Bearer ${_accessToken}`
         },
         body: json
     });
@@ -56,18 +60,23 @@ function getCookie(cookieName) {
         let [key, value] = el.split('=');
         cookie[key.trim()] = value;
     })
-    return cookie[cookieName];
+
+    if (cookie[cookieName]) {
+        return cookie[cookieName];
+    }
+    return "";
 }
 
 function deleteCookie(cookieName) {
     setCookie(cookieName, "", {
-      'max-age': -1
+        'max-age': -1
     })
-  }
+}
 
 export const Backend = {
     init: async () => {
         _accessToken = getCookie("accessToken");
+        _userId = getCookie("userId");
     },
 
     signIn: async (login, password, rememberMe) => {
@@ -82,17 +91,29 @@ export const Backend = {
         }
 
         const json = await response.json();
+        console.log(json);
         _accessToken = json.accessToken;
+        _userId = json.userId;
 
-        if (json.refreshToken) {
-            setCookie("accessToken", `Bearer_${_accessToken}`, { expires: json.expires });
-            setCookie("refreshToken", json.refreshToken, { expires: json.expires });
+        if (rememberMe && json.refreshToken) {
+            console.log(json.expires);
+            setCookie("accessToken", `${_accessToken}`, { expires: new Date(json.expires) });
+            setCookie("refreshToken", json.refreshToken, { expires: new Date(json.expires) });
+            setCookie("userId", _userId, { expires: new Date(json.expires) });
         }
 
         return true;
     },
 
-    isSignedIn: () => _accessToken !== undefined,
+
+
+    isSignedIn: () => _accessToken.length > 0,
+
+    isFirstSignIn: async () => {
+        const details = await Backend.getUserDetails();
+        const json = await details.json();
+        return json.age === 0;
+    },
 
     signUp: async (login, password) => {
         return await _post("/api/auth/register", {
@@ -105,6 +126,9 @@ export const Backend = {
     signOut: async () => {
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
+        deleteCookie("userId");
+        _userId = "";
+        _accessToken = "";
     },
 
     confirmRegistration: async (userId, code) => {
@@ -113,8 +137,8 @@ export const Backend = {
         });
     },
 
-    addUserDetails: async (userId, firstname, lastname, age) => {
-        return await _post(`/api/User/add_user_details/${userId}`, {
+    addUserDetails: async (firstname, lastname, age) => {
+        return await _post(`/api/User/add_user_details/${_userId}`, {
             firstname, lastname, age
         })
     },
@@ -129,6 +153,10 @@ export const Backend = {
             code: code,
             password: newpwd
         });
+    },
+
+    getUserDetails: async () => {
+        return await _get(`/api/user/user_details/${_userId}`);
     },
 
     getMapPoints: async () => {

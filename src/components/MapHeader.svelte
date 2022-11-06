@@ -1,8 +1,6 @@
 <script>
     import { Backend } from "../backend";
-    import { Nav } from "../navigation";
     import { createEventDispatcher } from "svelte";
-    import { navigate } from "svelte-routing";
 
     const dispatch = createEventDispatcher();
 
@@ -16,10 +14,9 @@
 
     function onSignOutClicked() {
         Backend.signOut()
-        .then(() => {
-            navigate(Nav.SIGN_UP);
-        })
-        // dispatch("signout");
+            .then(() => {
+                dispatch("userupdate")
+            })
     }
 
 </script>
@@ -31,7 +28,7 @@
             <div class="circle"></div>
             <p class="username">{name}</p>    
         </div>
-        <button class="button" on:click|preventDefault={() => onSignOutClicked()}>
+        <button class="button" on:click|preventDefault={onSignOutClicked}>
             Выйти 
             <i style="margin-left: 8px;" class="fa-solid fa-right-from-bracket"></i>
         </button>
@@ -40,7 +37,7 @@
             <div class="circle"></div>
             <p class="username">{name}</p>    
         </div>
-        <button class="button" on:click|preventDefault={() => onSignInClicked()}>
+        <button class="button" on:click|preventDefault={onSignInClicked}>
             Войти
             <i style="margin-left: 8px;" class="fa-solid fa-right-to-bracket"></i>
         </button>    

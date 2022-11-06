@@ -52,8 +52,7 @@
     {:else}
         <p class="label">Пароль сброшен. На указанную почту отправлено письмо с дальнейшими указаниями.</p>
         <div class="btn-holder">
-            <button class="btn__raised btn-primary" 
-            on:click|preventDefault={goBack}>
+            <button class="btn__raised btn-primary" on:click|preventDefault={goBack}>
                 Вернуться
             </button>
         </div>

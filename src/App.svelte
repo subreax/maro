@@ -9,6 +9,7 @@
     import NewPasswordRoute from "./routes/NewPasswordRoute.svelte";
     import ConfirmRoute from "./routes/ConfirmRoute.svelte";
     import { Nav } from "./navigation";
+    import EnterUserDetails from "./routes/EnterUserDetails.svelte";
 
     export let url = "";
 </script>
@@ -29,6 +30,7 @@
         <Route path={Nav.SIGN_IN} component={SignInRoute} />
         <Route path={Nav.SIGN_UP} component={SignUpRoute} />
         <Route path={Nav.CONFIRM_SIGN_UP} component={ConfirmRoute} />
+        <Route path={Nav.ENTER_USER_DETAILS} component={EnterUserDetails} />
         <Route path={Nav.FORGOT_PWD} component={ForgotPasswordRoute} />
         <!-- <Route path="reset-password-phone" component={ForgotPasswordPhoneRout} /> -->
         <Route path={Nav.NEW_PWD} component={NewPasswordRoute} />

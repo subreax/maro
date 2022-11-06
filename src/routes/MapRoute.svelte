@@ -11,6 +11,9 @@
     mapboxgl.accessToken =
         "pk.eyJ1IjoicmVmcmlnZXJhdG9yMmsiLCJhIjoiY2w5aXUwOGNzMDM2NDNvbzdjdGkzeWR0biJ9.Hbm67L4hmYTKaHYBXXD3DQ";
 
+    let username = "";
+    let isUserSignedIn = false;
+
     let map = null;
     let places;
 
@@ -75,6 +78,8 @@
     }
 
     onMount(() => {
+        onUserUpdated();
+
         map = new mapboxgl.Map({
             container: "map",
             style: "mapbox://styles/refrigerator2k/cl9r8ojom002u14nygzeui2gi",
@@ -255,11 +260,35 @@
         setRoute();
     }
 
+    function onUserUpdated() {
+        isUserSignedIn = Backend.isSignedIn();
+        if (isUserSignedIn) {
+            Backend.getUserDetails()
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json);
+                    username = json.fullName;
+                })
+                .catch(ex => {
+                    console.error(ex);
+                });
+        }
+        else {
+            username = "Гость"
+        }
+    }
+
 </script>
 
 <div class="map-container">
     <MapMenu className="floating-component-bg map-menu" on:newroute={makeNewRoute} on:reset={onReset} />
-    <MapHeader className="floating-component-bg map-header" isSignedIn={Backend.isSignedIn()} name="Гость" on:signin={() => navigate(Nav.SIGN_IN)} />
+    
+    <MapHeader  className="floating-component-bg map-header" 
+                isSignedIn={isUserSignedIn} 
+                name={username}
+                on:signin={() => navigate(Nav.SIGN_IN)} 
+                on:userupdate={onUserUpdated} />
+    
     <div id="map" />
 </div>
 
