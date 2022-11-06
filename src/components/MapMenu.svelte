@@ -9,11 +9,8 @@
 
     let routing = false;
 
-    function onApply(detail) {
-        const interests = detail.interests;
-        const wishes = detail.wishes;
-        console.log(interests);
-        console.log(wishes);
+    function onApply(event) {
+        dispatch("newroute", event.detail);
     }
 </script>
 
@@ -39,7 +36,7 @@
             </div>
             <p class="title">Построение маршрута</p>
         </div>
-        <PathTuningComponent className="path-tuning-component1" contentClassName="ptcomponent-content1" on:apply={(event) => onApply(event.detail)} />
+        <PathTuningComponent className="path-tuning-component1" contentClassName="ptcomponent-content1" on:apply={onApply} />
     {/if}
 </div>
 

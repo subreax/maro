@@ -206,10 +206,19 @@
 
     }
 
+    function makeNewRoute(event) {
+        const interests = event.detail.interests;
+        const wishes = event.detail.wishes;
+        Backend.getMapRoute(interests, wishes)
+            .then(route => {
+
+            });
+    }
+
 </script>
 
 <div class="map-container">
-    <MapMenu className="floating-component-bg map-menu" />
+    <MapMenu className="floating-component-bg map-menu" on:newroute={makeNewRoute} />
     <MapHeader className="floating-component-bg map-header" isSignedIn={Backend.isSignedIn()} name="Гость" on:signin={() => navigate(Nav.SIGN_IN)} />
     <div id="map" />
 </div>

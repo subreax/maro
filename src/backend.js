@@ -1,4 +1,5 @@
-const _mapBackHost = "http://37.18.121.45:3000";
+//const _mapBackHost = "http://37.18.121.45:3000";
+const _mapBackHost = "http://127.0.0.1:3000";
 const _hostUrl = "http://192.168.0.100:5173";
 
 let _accessToken = undefined;
@@ -120,7 +121,7 @@ export const Backend = {
 
     getMapRoute: async (interests, wishes) => {
         const query = await fetch(`${_mapBackHost}/route?interests=${interests}&wishes=${wishes}`);
-        console.log(await query.json());
+        return await query.json()
     }
 };
 
