@@ -19,27 +19,37 @@
 
 
 <div class="{className} header">
-    <div class="circle"></div>
-    <p class="username">{name}</p>
     {#if isSignedIn}
-        <button style="padding: 16px 32px;" on:click|preventDefault={() => onSignOutClicked()}>
+        <div class="user">
+            <div class="circle"></div>
+            <p class="username">{name}</p>    
+        </div>
+        <button class="button" on:click|preventDefault={() => onSignOutClicked()}>
             Выйти 
             <i style="margin-left: 8px;" class="fa-solid fa-right-from-bracket"></i>
         </button>
     {:else}
-        <button style="padding: 16px 32px;" on:click|preventDefault={() => onSignInClicked()}>
+        <div class="user">
+            <div class="circle"></div>
+            <p class="username">{name}</p>    
+        </div>
+        <button class="button" on:click|preventDefault={() => onSignInClicked()}>
             Войти
             <i style="margin-left: 8px;" class="fa-solid fa-right-to-bracket"></i>
-        </button>
+        </button>    
     {/if}
 </div>
 
 <style>
     .header {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: space-between;
         padding: 0px 0px 0px 5px;
+    }
+
+    .user {
+        display: flex;
+        align-items: center;
     }
 
     .circle {
@@ -54,5 +64,9 @@
         font-weight: 600;
         color: #262626;
         margin-right: 5px;
+    }
+
+    .button {
+        padding: 16px 16px 16px 16px;
     }
 </style>
