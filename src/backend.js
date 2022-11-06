@@ -1,9 +1,12 @@
+import { get } from "http";
+
 const _mapBackHost = "http://37.18.121.45:3000";
 //const _mapBackHost = "http://127.0.0.1:3000";
 const _hostUrl = "http://37.18.121.45:5173";
 
 let _accessToken = "";
 let _userId = "";
+let _groupId = "";
 
 function _buildUrl(path) {
     return `http://37.18.121.45:7269${path}`;
@@ -77,6 +80,7 @@ export const Backend = {
     init: async () => {
         _accessToken = getCookie("accessToken");
         _userId = getCookie("userId");
+        _groupId = getCookie("groupId");
     },
 
     signIn: async (login, password, rememberMe) => {
@@ -105,7 +109,10 @@ export const Backend = {
         return true;
     },
 
-
+    saveGroupId: (groupId) => {
+        _groupId = groupId;
+        setCookie("groupId", _groupId);
+    },
 
     isSignedIn: () => _accessToken.length > 0,
 
@@ -153,6 +160,28 @@ export const Backend = {
             code: code,
             password: newpwd
         });
+    },
+
+    createGroup: async () => {
+        return await _post("/api/Group/create_group", {
+            userId: _userId,
+            host: _hostUrl
+        })
+    },
+
+    joinGroup: async (groupId) => {
+        return await _post("/api/Group/join_group", {
+            userId: _userId, 
+            groupId: groupId
+        })
+    },
+
+    deleteGroup: async (groupId) => {
+        return await fetch(`/api/Group/delete_group/${groupId}`);
+    },
+
+    getGroupDetails: async (groupId) => {
+        return await _get(`/api/Group/group_details/${groupId}`);
     },
 
     getUserDetails: async () => {
