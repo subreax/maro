@@ -28,7 +28,9 @@
                     else {
                         console.error("Failed to sign up");
                         console.error(response);
-                        console.error(await response.text());
+                        let error = response.text()
+                        console.error(await error);
+                        alert(await error);
                     }
                 });
         }

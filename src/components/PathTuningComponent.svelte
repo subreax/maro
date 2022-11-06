@@ -7,7 +7,7 @@
     import CompanyConfigurer from "./CompanyConfigurer.svelte";
     import DetailedWishesSelector from "./DetailedWishesSelector.svelte";
     import DetailedInterestsSelector from "./DetailedInterestsSelector.svelte";
-
+    import { Backend } from "../backend";
 
     const dispatch = createEventDispatcher();
 

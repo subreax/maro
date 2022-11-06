@@ -1,4 +1,6 @@
 <script>
+    import { Backend } from "../backend";
+
     let companyCreated = false;
 
     function createCompany() {
@@ -8,32 +10,33 @@
     function deleteCompany() {
         companyCreated = false;
     }
-
 </script>
 
 {#if !companyCreated}
+    {#if Backend.isSignedIn()}
 
-<p>
-    Создайте компанию, с которой вы собираетесь пойти на прогулку, или присоединитесь к уже существующей.
-</p>
 
-<div class="vspace"></div>
+    <p>
+        Создайте компанию, с которой вы собираетесь пойти на прогулку, или
+        присоединитесь к уже существующей.
+    </p>
 
-<button on:click={() => createCompany()}>
-    Создать компанию
-</button>
+    <div class="vspace" />
 
+    <button on:click={() => createCompany()}> Создать компанию </button>
+    {:else}
+    <p>Чтобы создать компанию, нужно авторизоваться.</p>
+    {/if}
 {:else}
+    <p>
+        Компания создана. Чтобы присоединиться к компании, участники должны
+        отсканировать этот QR-код:
+    </p>
 
-<p>Компания создана. Чтобы присоединиться к компании, участники должны отсканировать этот QR-код:</p>
+    <div class="qr" />
 
-<div class="qr"></div>
-
-<button on:click={() => deleteCompany()}>Удалить компанию</button>
-
+    <button on:click={() => deleteCompany()}>Удалить компанию</button>
 {/if}
-
-
 
 
 <style>
