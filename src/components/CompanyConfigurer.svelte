@@ -4,10 +4,21 @@
     let companyCreated = false;
 
     function createCompany() {
-        companyCreated = true;
+        if(!companyCreated) {
+            Backend.createGroup()
+            .then(async (response) => {
+                let qr = document.getElementById('qr');
+                let res = await response.json();
+                companyCreated = true;
+                qr.style.backgroundImage = res.qrLink;
+            });
+        }
     }
 
     function deleteCompany() {
+        if(companyCreated) {
+            Backend.deleteGroup()
+        }
         companyCreated = false;
     }
 </script>
@@ -33,7 +44,7 @@
         отсканировать этот QR-код:
     </p>
 
-    <div class="qr" />
+    <div class="qr" id = "qr"/>
 
     <button on:click={() => deleteCompany()}>Удалить компанию</button>
 {/if}
