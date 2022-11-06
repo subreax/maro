@@ -1,6 +1,6 @@
 const _mapBackHost = "http://37.18.121.45:3000";
 //const _mapBackHost = "http://127.0.0.1:3000";
-const _hostUrl = "http://37.18.121.45:5173";
+const _hostUrl = "http://37.18.121.45";
 
 let _accessToken = "";
 let _userId = "";
