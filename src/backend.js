@@ -1,3 +1,6 @@
+import async from "async";
+import { accessToken } from "mapbox-gl";
+
 const _mapBackHost = "http://37.18.121.45:3000";
 const _hostUrl = "http://192.168.0.100:5173";
 
@@ -58,6 +61,12 @@ function getCookie(cookieName) {
     return cookie[cookieName];
 }
 
+function deleteCookie(cookieName) {
+    setCookie(cookieName, "", {
+      'max-age': -1
+    })
+  }
+
 export const Backend = {
     init: async () => {
         _accessToken = getCookie("accessToken");
@@ -95,10 +104,21 @@ export const Backend = {
         });
     },
 
+    signOut: async () => {
+        deleteCookie("accessToken");
+        deleteCookie("refreshToken");
+    },
+
     confirmRegistration: async (userId, code) => {
         return await _post("/api/auth/confirm", {
             userId, code
         });
+    },
+
+    addUserDetails: async (userId, firstname, lastname, age) => {
+        return await _post(`/api/User/add_user_details/${userId}`, {
+            firstname, lastname, age
+        })
     },
 
     resetPassword: async (login) => {

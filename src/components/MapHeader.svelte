@@ -1,5 +1,8 @@
 <script>
+    import { Backend } from "../backend";
+    import { Nav } from "../navigation";
     import { createEventDispatcher } from "svelte";
+    import { navigate } from "svelte-routing";
 
     const dispatch = createEventDispatcher();
 
@@ -12,7 +15,11 @@
     }
 
     function onSignOutClicked() {
-        dispatch("signout");
+        Backend.signOut()
+        .then(() => {
+            navigate(Nav.SIGN_UP);
+        })
+        // dispatch("signout");
     }
 
 </script>
