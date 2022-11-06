@@ -3,6 +3,8 @@
     import { isEmailValid } from "../utils";
     import Textfield from "../components/Textfield.svelte";
     import { navigate } from "svelte-routing";
+    import { Nav } from "../navigation";
+    import Logo from "../assets/Logo.svg"
 
     export let location;
 
@@ -26,14 +28,14 @@
     }
 
     function goBack() {
-        navigate("/signin", { replace: true });
+        navigate(Nav.SIGN_IN, { replace: true });
     }
 
 </script>
 
 <form class="auth-container">
     <figure class="emblem">
-        <img src="../assets/Logo.svg" alt="" />
+        <img src="{Logo}" alt="" />
     </figure>
 
     {#if !isPasswordReset} 

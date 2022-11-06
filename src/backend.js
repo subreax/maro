@@ -1,4 +1,6 @@
+const _mapBackHost = "http://37.18.121.45:3000";
 const _hostUrl = "http://192.168.0.100:5173";
+
 let _accessToken = undefined;
 let _userId = "";
 
@@ -110,6 +112,16 @@ export const Backend = {
             password: newpwd
         });
     },
+
+    getMapPoints: async () => {
+        const query = await fetch(`${_mapBackHost}/points`);
+        return await query.json();
+    },
+
+    getMapRoute: async (interests, wishes) => {
+        const query = await fetch(`${_mapBackHost}/route?interests=${interests}&wishes=${wishes}`);
+        console.log(await query.json());
+    }
 };
 
-await Backend.init();
+Backend.init();

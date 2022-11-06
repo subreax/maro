@@ -8,6 +8,7 @@
     import MapRoute from "./routes/MapRoute.svelte";
     import NewPasswordRoute from "./routes/NewPasswordRoute.svelte";
     import ConfirmRoute from "./routes/ConfirmRoute.svelte";
+    import { Nav } from "./navigation";
 
     export let url = "";
 </script>
@@ -24,14 +25,14 @@
     </nav> -->
 
     <div>
-        <Route path="/" component={ExploreRoute} />
-        <Route path="signin" component={SignInRoute} />
-        <Route path="signup" component={SignUpRoute} />
-        <Route path="confirm" component={ConfirmRoute} />
-        <Route path="reset-password" component={ForgotPasswordRoute} />
-        <Route path="reset-password-phone" component={ForgotPasswordPhoneRout} />
-        <Route path="reset_password" component={NewPasswordRoute} />
-        <Route path="map" component={MapRoute} />
+        <Route path={Nav.EXPLORE} component={ExploreRoute} />
+        <Route path={Nav.SIGN_IN} component={SignInRoute} />
+        <Route path={Nav.SIGN_UP} component={SignUpRoute} />
+        <Route path={Nav.CONFIRM_SIGN_UP} component={ConfirmRoute} />
+        <Route path={Nav.FORGOT_PWD} component={ForgotPasswordRoute} />
+        <!-- <Route path="reset-password-phone" component={ForgotPasswordPhoneRout} /> -->
+        <Route path={Nav.NEW_PWD} component={NewPasswordRoute} />
+        <Route path={Nav.MAP} component={MapRoute} />
     </div>
 </Router>
 

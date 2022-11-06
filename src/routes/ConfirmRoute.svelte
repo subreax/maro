@@ -4,6 +4,8 @@
     import Textfield from "../components/Textfield.svelte";
     import Numberfield from "../components/Numberfield.svelte";
     import { parseGetParams } from "../utils"
+    import { Nav } from "../navigation";
+    import Logo from "../assets/Logo.svg"
 
     let userName;
     let userAge;
@@ -17,7 +19,7 @@
         Backend.confirmRegistration(params.userId, params.code)
             .then(async (response) => {
                 if (response.ok) {
-                    navigate("/map", { replace: true });
+                    navigate(Nav.MAP, { replace: true });
                 } else {
                     hasErrors = true;
                     console.log(await response.text());
@@ -29,7 +31,7 @@
 
 <form class="auth-container">
     <picture class="emblem">
-        <img src="../assets/Logo.svg" alt="" />
+        <img src="{Logo}" alt="" />
     </picture>
 
     {#if !hasErrors}
@@ -53,6 +55,6 @@
         </button>
     {:else}
         <h2>Не удалось подтвердить аккаунт</h2>
-        <Link to="/signin">Назад</Link>
+        <Link to={Nav.SIGN_IN}>Назад</Link>
     {/if}
 </form>

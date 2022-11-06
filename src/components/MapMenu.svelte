@@ -1,10 +1,20 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import PathTuningComponent from "./PathTuningComponent.svelte";
+
+    const dispatch = createEventDispatcher();
 
     export let className = "";
     export let searchText = "";
 
     let routing = false;
+
+    function onApply(detail) {
+        const interests = detail.interests;
+        const wishes = detail.wishes;
+        console.log(interests);
+        console.log(wishes);
+    }
 </script>
 
 
@@ -29,7 +39,7 @@
             </div>
             <p class="title">Построение маршрута</p>
         </div>
-        <PathTuningComponent className="path-tuning-component1" contentClassName="ptcomponent-content1" />
+        <PathTuningComponent className="path-tuning-component1" contentClassName="ptcomponent-content1" on:apply={(event) => onApply(event.detail)} />
     {/if}
 </div>
 

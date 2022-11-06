@@ -1,5 +1,6 @@
 <script>
     import CodeInputComponent from "../components/CodeInputComponent.svelte";
+    import Logo from "../assets/Logo.svg"
     
     export let location;
     
@@ -10,13 +11,13 @@
 
 <form class="auth-container">
     <figure class="emblem">
-        <img src="../assets/Logo.svg" alt="" />
+        <img src="{Logo}" alt="" />
     </figure>
 
     <h2 class="label">Сброс пароля</h2>
     <p class="label">Код отправлен по СМС</p>
     
-    <CodeInputComponent className="align-center" digits={6} on:code={(e) => onCodeEntered(e.detail.code)} />
+    <CodeInputComponent className={"align-center"} digits={6} on:code={(e) => onCodeEntered(e.detail.code)} />
     
     <div class="btn-holder">
         <button class="btn__raised btn-primary">Сбросить пароль</button>

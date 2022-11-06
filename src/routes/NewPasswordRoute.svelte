@@ -3,6 +3,8 @@
     import PasswordField from "../components/PasswordField.svelte";
     import { Backend } from "../backend";
     import { navigate } from "svelte-routing";
+    import { Nav } from "../navigation";
+    import Logo from "../assets/Logo.svg"
     
     // email=dima2000947@gmail.com
     // code=Q2ZESjhIQnpucmZUUEhwTnNDT2VwWHNKYU0zcllwRzdid2VLaE9qZHBaS3ZlS2hJWldNbVlaTm9RQlhiV1NYUVNJZHdwYTdRM05pL2ZpcUx6b1A4aTVWZ3cxeCs1cEZVSG5WR04xa3lEcVVzQ0lDalBBdWVVN1lNTndGV255dytMYk55WFdGeUpoVStnUTkzWGQ4M2MzL1ZHcFp6dVM5eG03SXAzb0NBZGpuWW8vYVRKZ0lWVFJiR0NMRlR0a1ZKVS9sYU9sRzRtWDdOUWkxRkhkM1k0NWVCYUV4WFdoWDJ5M1gwTG0wWm1mN0NHUlYw
@@ -33,7 +35,7 @@
 
 <form class="auth-container">
     <figure class="emblem">
-        <img src="../assets/Logo.svg" alt="" />
+        <img src="{Logo}" alt="" />
     </figure>
 
     {#if !isPasswordConfirmed}
@@ -50,7 +52,7 @@
     {:else}
         <p class="label">Пароль успешно сброшен! Теперь вы можете снова войти в свой аккаунт.</p>
         <div class="btn-holder">
-            <button class="btn__raised btn-primary" on:click|preventDefault={() => navigate("/signin", {replace: true})}>
+            <button class="btn__raised btn-primary" on:click|preventDefault={() => navigate(Nav.SIGN_IN, {replace: true})}>
                 Войти
             </button>
         </div>

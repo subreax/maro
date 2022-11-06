@@ -4,15 +4,17 @@
     import { navigate } from "svelte-routing";
     import { isEmailValid, isPasswordValid } from "../utils";
     import { Backend } from "../backend";
+    import { Nav } from "../navigation";
+    import Logo from "../assets/Logo.svg"
     
     let email;
     let password;
     let passwordRepeated;
 
-    let isSignUpPressed = true;
+    let isSignUpPressed = false;
 
     function signInClicked() {
-        navigate("/signin", { replace: true });
+        navigate(Nav.SIGN_IN, { replace: true });
     }
 
     function signUpClicked() {
@@ -35,7 +37,7 @@
 
 <form class="auth-container">
     <picture class="emblem">
-        <img src="../assets/Logo.svg" alt="" />
+        <img src="{Logo}" alt="" />
     </picture>
 
     {#if !isSignUpPressed}
@@ -73,7 +75,7 @@
     {:else}
         <p class="label">Чтобы завершить регистрацию, подтвердите свой аккаунт. На указанную почту отправлено письмо с дальнейшими указаниями.</p>
         <div class="btn-holder">
-            <button class="btn__raised btn-primary" on:click|preventDefault={() => navigate("/signin", { replace: true })}>Вернуться</button>
+            <button class="btn__raised btn-primary" on:click|preventDefault={() => navigate(Nav.SIGN_IN, { replace: true })}>Вернуться</button>
         </div>
     {/if}
 

@@ -4,6 +4,8 @@
     import Checkbox from "../components/Checkbox.svelte";
     import { navigate, Link } from "svelte-routing";
     import { Backend } from "../backend";
+    import { Nav } from "../navigation";
+    import Logo from "../assets/Logo.svg"
 
     let remember;
     let login;
@@ -13,7 +15,7 @@
         Backend.signIn(login, password, remember)
             .then(async isOk => {
                 if (isOk) {
-                    navigate("/map", {replace: true});
+                    navigate(Nav.SIGN_IN, {replace: true});
                 }
                 else {
                     console.error("Failed to sign in");
@@ -22,13 +24,13 @@
     }
 
     function signUpClicked() {
-        navigate("/signup")
+        navigate(Nav.SIGN_UP)
     }
 </script>
 
 <form class="auth-container">
     <picture class="emblem">
-        <img src="../assets/Logo.svg" alt="" />
+        <img src="{Logo}" alt="" />
     </picture>
 
     <Textfield
@@ -45,7 +47,7 @@
 
     <div class="row">
         <Checkbox checkboxContent="Запомнить меня" bind:status={remember} />
-        <Link to="/reset-password" style="color: #E22C38; display: block; text-align: center" class="additional-button">Забыли пароль?</Link>
+        <Link to={Nav.FORGOT_PWD} style="color: #E22C38; display: block; text-align: center" class="additional-button">Забыли пароль?</Link>
     </div>
     
     

@@ -6,6 +6,7 @@
     import MapHeader from "../components/MapHeader.svelte";
     import { navigate } from "svelte-routing";
     import { Backend } from "../backend";
+    import { Nav } from "../navigation";
 
     mapboxgl.accessToken =
         "pk.eyJ1IjoicmVmcmlnZXJhdG9yMmsiLCJhIjoiY2w5aXUwOGNzMDM2NDNvbzdjdGkzeWR0biJ9.Hbm67L4hmYTKaHYBXXD3DQ";
@@ -63,14 +64,8 @@
 
 
         map.on("load", async () => {
-            const geojson = getGeoJsonSource();
-            activePlaceGeojson.features[0].properties =
-                geojson.features[0].properties;
-
-            map.addSource("places", {
-                type: "geojson",
-                data: geojson,
-            });
+            const geojsonxx = await Backend.getMapPoints();
+            map.addSource("places", geojsonxx);
 
             map.addLayer({
                 id: "vdnh-place-points",
@@ -111,7 +106,7 @@
                 layout: {
                     "icon-image": "{icon}",
                     "icon-size": 1,
-                    "text-field": "{map_title}",
+                    "text-field": "{title_short}",
                     "text-size": 12,
                     "text-anchor": "top",
                     "icon-anchor": "bottom",
@@ -185,17 +180,6 @@
         });
     });
 
-    function getGeoJsonSource() {
-        // @ts-ignore
-        // 'places' var loads in index.html script
-        const features = Object.values(places);
-        return {
-            type: "FeatureCollection",
-            features: features,
-        };
-    }
-
-
     function selectPlace(feature) {
         activePlaceGeojson.features[0] = feature;
 
@@ -222,16 +206,11 @@
 
     }
 
-    function onPathPropertiesChanged({wishes, interests}) {
-        console.log(`wishes: ${wishes}`);
-        console.log(`interests: ${interests}`);
-    }
-
 </script>
 
 <div class="map-container">
     <MapMenu className="floating-component-bg map-menu" />
-    <MapHeader className="floating-component-bg map-header" isSignedIn={Backend.isSignedIn()} name="Гость" on:signin={() => navigate("/signin")} />
+    <MapHeader className="floating-component-bg map-header" isSignedIn={Backend.isSignedIn()} name="Гость" on:signin={() => navigate(Nav.SIGN_IN)} />
     <div id="map" />
 </div>
 
