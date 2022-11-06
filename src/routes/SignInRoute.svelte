@@ -15,7 +15,7 @@
         Backend.signIn(login, password, remember)
             .then(async isOk => {
                 if (isOk) {
-                    navigate(Nav.SIGN_IN, {replace: true});
+                    navigate(Nav.MAP, {replace: true});
                 }
                 else {
                     console.error("Failed to sign in");
