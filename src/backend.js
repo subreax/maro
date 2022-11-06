@@ -95,11 +95,11 @@ export const Backend = {
         _accessToken = json.accessToken;
         _userId = json.userId;
 
+        setCookie("accessToken", `${_accessToken}`, { expires: new Date(json.expires) });
+        setCookie("userId", _userId, { expires: new Date(json.expires) });
+
         if (rememberMe && json.refreshToken) {
-            console.log(json.expires);
-            setCookie("accessToken", `${_accessToken}`, { expires: new Date(json.expires) });
             setCookie("refreshToken", json.refreshToken, { expires: new Date(json.expires) });
-            setCookie("userId", _userId, { expires: new Date(json.expires) });
         }
 
         return true;
