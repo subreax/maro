@@ -81,8 +81,7 @@
                 </div>
             {/if}
         </div>
-        
-        <button on:click={() => deleteCompany()}>Удалить компанию</button>
+        <button on:click|preventDefault={deleteCompany}>Удалить компанию</button>
     {/if}
 {:else}
     <p>Чтобы создать компанию, нужно авторизоваться.</p>

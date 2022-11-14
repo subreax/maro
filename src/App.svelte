@@ -10,6 +10,7 @@
     import ConfirmRoute from "./routes/ConfirmRoute.svelte";
     import { Nav } from "./navigation";
     import EnterUserDetails from "./routes/EnterUserDetails.svelte";
+    import JoinToGroupRoute from "./routes/JoinToGroupRoute.svelte";
 
     export let url = "";
 </script>
@@ -35,6 +36,7 @@
         <!-- <Route path="reset-password-phone" component={ForgotPasswordPhoneRout} /> -->
         <Route path={Nav.NEW_PWD} component={NewPasswordRoute} />
         <Route path={Nav.MAP} component={MapRoute} />
+        <Route path={Nav.JOIN_GROUP} component={JoinToGroupRoute} />
     </div>
 </Router>
 
