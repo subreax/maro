@@ -1,10 +1,10 @@
-import { get } from "http";
-
 const _mapBackHost = "http://37.18.121.45:3000";
 //const _mapBackHost = "http://127.0.0.1:3000";
-const _hostUrl = "http://37.18.121.45:5173";
+//const _hostUrl = "http://192.168.0.100:5173";
+const _hostUrl = "http://192.168.0.100:5173";
 
 let _accessToken = "";
+let _refreshToken = "";
 let _userId = "";
 let _groupId = "";
 
@@ -26,6 +26,27 @@ async function _post(path, body = {}) {
 
     return fetch(_buildUrl(path), {
         method: "POST",
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            "Authorization": `Bearer ${_accessToken}`
+        },
+        body: json
+    });
+}
+
+async function _delete(path) {
+    return fetch(_buildUrl(path), {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${_accessToken}`
+        }
+    });
+}
+
+async function _put(path, body = {}) {
+    const json = JSON.stringify(body);
+    return fetch(_buildUrl(path), {
+        method: "PUT",
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
             "Authorization": `Bearer ${_accessToken}`
@@ -79,8 +100,10 @@ function deleteCookie(cookieName) {
 export const Backend = {
     init: async () => {
         _accessToken = getCookie("accessToken");
+        _refreshToken = getCookie("refreshToken");
         _userId = getCookie("userId");
-        _groupId = getCookie("groupId");
+        //_groupId = getCookie("groupId");
+        _groupId = "239b5ff6-937b-4629-97ad-ffbc44db5dd7";
     },
 
     signIn: async (login, password, rememberMe) => {
@@ -134,8 +157,18 @@ export const Backend = {
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
         deleteCookie("userId");
-        _userId = "";
+        deleteCookie("groupId");
         _accessToken = "";
+        _refreshToken = "";
+        _userId = "";
+        _groupId = "";
+    },
+
+    refreshToken: async () => {
+        return await _put("/api/auth/refresh_token", {
+            "access_token": _accessToken,
+            "refresh_token": _refreshToken
+        });
     },
 
     confirmRegistration: async (userId, code) => {
@@ -163,25 +196,28 @@ export const Backend = {
     },
 
     createGroup: async () => {
-        return await _post("/api/Group/create_group", {
+        return await _post("/api/group/create_group", {
             userId: _userId,
             host: _hostUrl
         })
     },
 
-    joinGroup: async (groupId) => {
+    joinGroup: async () => {
         return await _post("/api/Group/join_group", {
             userId: _userId, 
-            groupId: groupId
+            groupId: _groupId
         })
     },
 
-    deleteGroup: async (groupId) => {
-        return await fetch(`/api/Group/delete_group/${groupId}`);
+    hasGroupId: () => _groupId.length > 0,
+
+    deleteGroup: async () => {
+        console.log(_groupId);
+        return await _delete(`/api/group/delete_group/${_groupId}`);
     },
 
-    getGroupDetails: async (groupId) => {
-        return await _get(`/api/Group/group_details/${groupId}`);
+    getGroupDetails: async () => {
+        return await _get(`/api/Group/group_details/${_groupId}`);
     },
 
     getUserDetails: async () => {
