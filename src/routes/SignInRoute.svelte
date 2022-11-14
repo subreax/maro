@@ -18,7 +18,6 @@
             .then(async isOk => {
                 if (isOk) {
                     const isFirstSignIn = await Backend.isFirstSignIn();
-                    console.log(`isFirstSignIn: ${isFirstSignIn}`)
 
                     if (isFirstSignIn) {
                         navigate(Nav.ENTER_USER_DETAILS, { replace: true });

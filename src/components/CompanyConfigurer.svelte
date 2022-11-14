@@ -5,7 +5,8 @@
     let companyCreated = Backend.hasGroupId();
 
     let qrComponent;
-    
+
+    let isQrLoading = false;
 
     onMount(() => {
         if (qrComponent && companyCreated) {
@@ -33,21 +34,16 @@
         
         console.log(qrComponent);
 
-        Backend.createGroup()
-            .then(async res => {
-                const json = await res.json();
-                if (res.ok) {
-                    console.log(json);
-                    Backend.saveGroupId(json.groupId);
-                    companyCreated = true;
-                    
-                    setQrImage(json.qrLink);
-                }
-                else {
-                    console.error(json);
-                }
-            });
-        
+        isQrLoading = true;
+
+        const result = await Backend.createGroup();
+        if (result.ok) {
+            isQrLoading = false;
+            setQrImage(result.qrLink);
+        } 
+        else {
+            isQrLoading = true;
+        }
     }
 
     function setQrImage(url) {
@@ -73,11 +69,19 @@
 {#if Backend.isSignedIn()}
     {#if !companyCreated}
         <p>Создайте компанию, с которой вы собираетесь пойти на прогулку, или присоединитесь к уже существующей.</p>
-        <div class="vspace" />
+        <div class="vspace"></div>
         <button on:click|preventDefault={createCompany}>Создать компанию</button>
     {:else}
         <p>Компания создана. Чтобы присоединиться к компании, участники должны отсканировать этот QR-код:</p>
-        <div bind:this={qrComponent} class="qr" />
+        <div class="qr-container">
+            <div bind:this={qrComponent} class="qr absolute-center" />
+            {#if isQrLoading}
+                <div class="absolute-center">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                </div>
+            {/if}
+        </div>
+        
         <button on:click={() => deleteCompany()}>Удалить компанию</button>
     {/if}
 {:else}
@@ -90,12 +94,39 @@
         height: 10px;
     }
 
-    .qr {
+    .qr-container {
+        position: relative;
         width: 150px;
         height: 150px;
-        background: #424242;
         border-radius: 10px;
         margin: 10px auto;
     }
+
+    .absolute-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .qr {
+        width: 150px;
+        height: 150px;
+    }
+
+    .qr-container i {
+        font-size: 2rem;
+        display: block;
+        padding: 0;
+        margin: 0;
+    }
+/* 
+    .qr i {
+        
+        font-size: 1rem;
+        position: absolute;
+        
+        transform: translate(-50%, -50%);
+    } */
 
 </style>

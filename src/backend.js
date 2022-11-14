@@ -1,5 +1,5 @@
-const _mapBackHost = "http://37.18.121.45:3000";
-//const _mapBackHost = "http://127.0.0.1:3000";
+//const _mapBackHost = "http://37.18.121.45:3000";
+const _mapBackHost = "http://127.0.0.1:3000";
 //const _hostUrl = "http://192.168.0.100:5173";
 const _hostUrl = "http://192.168.0.100:5173";
 
@@ -7,6 +7,7 @@ let _accessToken = "";
 let _refreshToken = "";
 let _userId = "";
 let _groupId = "";
+let _groupRole = "";
 
 function _buildUrl(path) {
     return `http://37.18.121.45:7269${path}`;
@@ -102,8 +103,17 @@ export const Backend = {
         _accessToken = getCookie("accessToken");
         _refreshToken = getCookie("refreshToken");
         _userId = getCookie("userId");
-        _groupId = getCookie("groupId");
-        //_groupId = "239b5ff6-937b-4629-97ad-ffbc44db5dd7";
+
+        const res = await Backend.getUserDetails();
+        const json = await res.json();
+        _groupId = json.groupId;
+        if (!_groupId) {
+            _groupId = "";
+        }
+        _groupRole = json.groupRole;
+        if (!_groupRole) {
+            _groupRole = "";
+        }
     },
 
     signIn: async (login, password, rememberMe) => {
@@ -113,12 +123,14 @@ export const Backend = {
             rememberMe: rememberMe
         });
 
+        const json = await response.json();
+        console.log("signin");
+        console.log(json);
+
         if (!response.ok) {
             return false;
         }
 
-        const json = await response.json();
-        console.log(json);
         _accessToken = json.accessToken;
         _userId = json.userId;
 
@@ -129,12 +141,15 @@ export const Backend = {
             setCookie("refreshToken", json.refreshToken, { expires: new Date(json.expires) });
         }
 
-        return true;
-    },
+        
+        const detailsRes = await Backend.getUserDetails();
+        const detailsJson = await detailsRes.json();
+        console.log("details");
+        console.log(detailsJson);
 
-    saveGroupId: (groupId) => {
-        _groupId = groupId;
-        setCookie("groupId", _groupId);
+        _groupId = detailsJson.groupId;
+
+        return true;
     },
 
     isSignedIn: () => _accessToken.length > 0,
@@ -157,7 +172,6 @@ export const Backend = {
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
         deleteCookie("userId");
-        deleteCookie("groupId");
         _accessToken = "";
         _refreshToken = "";
         _userId = "";
@@ -196,10 +210,26 @@ export const Backend = {
     },
 
     createGroup: async () => {
-        return await _post("/api/group/create_group", {
+        const res = await _post("/api/group/create_group", {
             userId: _userId,
             host: _hostUrl
-        })
+        });
+
+        const json = await res.json();
+
+        let result = {
+            ok: res.ok
+        };
+
+        if (res.ok) {
+            _groupId = json.groupId;
+            result = { ...result, qrLink: json.qrLink }
+        }
+        else {
+            console.error(json);
+        }
+        
+        return result;
     },
 
     joinGroup: async () => {
@@ -211,13 +241,15 @@ export const Backend = {
 
     hasGroupId: () => _groupId.length > 0,
 
+    isThisUserGroupAdmin: () => _groupRole === "group_admin",
+
     deleteGroup: async () => {
         console.log(_groupId);
         return await _delete(`/api/group/delete_group/${_groupId}`);
     },
 
     getGroupDetails: async () => {
-        return await _get(`/api/Group/group_details/${_groupId}`);
+        return await _get(`/api/group/group_details/${_groupId}`);
     },
 
     getUserDetails: async () => {

@@ -222,19 +222,27 @@
     }
 
     function makeNewRoute(event) {
-        const interests = event.detail.interests;
-        const wishes = event.detail.wishes;
+        let interests = event.detail.interests;
+        let wishes = event.detail.wishes;
 
-        if (interests !== 0) {
+        if (interests === 0) {
+            interests = 0xffffffff;
+        }
+
+        if (wishes === 0) {
+            wishes = 0xffffffff;
+        }
+
+        //if (interests !== 0 || wishes !== 0) {
             Backend.getMapRoute(interests, wishes, mapboxgl.accessToken)
                 .then(route => {
                     applyFilter(route);
                     setRoute(route);
                 });
-        }
-        else {
-            onReset();
-        }
+        //}
+        //else {
+        //    onReset();
+        //}
 
     }
 
@@ -266,7 +274,6 @@
             Backend.getUserDetails()
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json);
                     username = json.fullName;
                 })
                 .catch(ex => {
