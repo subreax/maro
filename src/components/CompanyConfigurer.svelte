@@ -47,7 +47,6 @@
                     console.error(json);
                 }
             });
-        
     }
 
     function setQrImage(url) {
@@ -77,7 +76,9 @@
         <button on:click|preventDefault={createCompany}>Создать компанию</button>
     {:else}
         <p>Компания создана. Чтобы присоединиться к компании, участники должны отсканировать этот QR-код:</p>
-        <div bind:this={qrComponent} class="qr" />
+        
+        //скорее всего бред
+        <div bind:this={qrComponent} class="qr" on:click|preventDefault={() => navigate(Nav.JOIN_GROUP, { replace: true })}/>
         <button on:click={() => deleteCompany()}>Удалить компанию</button>
     {/if}
 {:else}
