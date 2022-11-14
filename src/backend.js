@@ -102,8 +102,8 @@ export const Backend = {
         _accessToken = getCookie("accessToken");
         _refreshToken = getCookie("refreshToken");
         _userId = getCookie("userId");
-        //_groupId = getCookie("groupId");
-        _groupId = "239b5ff6-937b-4629-97ad-ffbc44db5dd7";
+        _groupId = getCookie("groupId");
+        //_groupId = "239b5ff6-937b-4629-97ad-ffbc44db5dd7";
     },
 
     signIn: async (login, password, rememberMe) => {
