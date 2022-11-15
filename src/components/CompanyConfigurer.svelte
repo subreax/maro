@@ -1,8 +1,12 @@
 <script>
     import { onMount, tick } from "svelte";
-    import { Backend } from "../backend";
+    import { Backend, GroupRole } from "../backend";
 
-    let companyCreated = Backend.hasGroupId();
+    let groupRole = Backend.getGroupRole();
+    $: companyCreated = groupRole !== GroupRole.NO_ROLE;
+
+    
+    let members = []
 
     let qrComponent;
 
@@ -10,6 +14,8 @@
 
     onMount(() => {
         if (qrComponent && companyCreated) {
+            loadGroupMembers();
+
             Backend.getGroupDetails()
                 .then(async (res) => {
                     const json = await res.json();
@@ -29,10 +35,8 @@
             return;
         }
 
-        companyCreated = true;
+        groupRole = GroupRole.ADMIN;
         await tick();
-        
-        console.log(qrComponent);
 
         isQrLoading = true;
 
@@ -44,6 +48,8 @@
         else {
             isQrLoading = true;
         }
+
+        loadGroupMembers();
     }
 
     function setQrImage(url) {
@@ -51,40 +57,67 @@
     }
 
     function deleteCompany() {
-        if (companyCreated) {
-            Backend.deleteGroup()
-                .then(async res => {
-                    if (!res.ok) {
-                        console.error(await res.json());
-                    }
-                    else {
-                        companyCreated = false;
-                    }
-                })
+        Backend.deleteGroup()
+            .then(async res => {
+                if (!res.ok) {
+                    console.error(await res.json());
+                }
+                else {
+                    groupRole = Backend.getGroupRole();
+                    members = [];
+                }
+            })
+    }
+
+    function leaveCompany() {
+        
+    }
+
+    function loadGroupMembers() {
+        Backend.getGroupMembers().then(result => {
+            if (result.ok) {
+                members = result.members;
             }
+        });
     }
 </script>
 
 
 {#if Backend.isSignedIn()}
-    {#if !companyCreated}
+    {#if groupRole === GroupRole.NO_ROLE}
         <p>Создайте компанию, с которой вы собираетесь пойти на прогулку, или присоединитесь к уже существующей.</p>
         <div class="vspace"></div>
         <button on:click|preventDefault={createCompany}>Создать компанию</button>
     {:else}
-        <p>Компания создана. Чтобы присоединиться к компании, участники должны отсканировать этот QR-код:</p>
-        <div class="qr-container">
-            <div bind:this={qrComponent} class="qr absolute-center" />
-            {#if isQrLoading}
-                <div class="absolute-center">
-                    <i class="fa-solid fa-circle-notch fa-spin"></i>
-                </div>
+        {#if groupRole === GroupRole.ADMIN}
+            <p>Компания создана. Чтобы присоединиться к компании, участники должны отсканировать этот QR-код:</p>
+            <div class="qr-container">
+                <div bind:this={qrComponent} class="qr absolute-center" />
+                {#if isQrLoading}
+                    <div class="absolute-center">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    </div>
+                {/if}
+            </div>
+
+            {#if members.length > 0}
+                <p>Состав компании:</p>
+                <ul>
+                    {#each members as member}
+                        <li>{member}</li>
+                    {/each}
+                </ul>
             {/if}
-        </div>
-        <button on:click|preventDefault={deleteCompany}>Удалить компанию</button>
+
+            <button>Купить билеты</button>
+            <button on:click|preventDefault={deleteCompany}>Удалить компанию</button>
+        {:else if groupRole === GroupRole.MEMBER}
+            <p>Вы состоите к группе</p>
+            <button on:click|preventDefault={leaveCompany}>Выйти из компании</button>
+        {/if}
     {/if}
 {:else}
-    <p>Чтобы создать компанию, нужно авторизоваться.</p>
+    <p>Чтобы создать компанию, нужно войти</p>
 {/if}
 
 
@@ -95,8 +128,8 @@
 
     .qr-container {
         position: relative;
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         border-radius: 10px;
         margin: 10px auto;
     }
@@ -109,8 +142,8 @@
     }
 
     .qr {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
     }
 
     .qr-container i {
@@ -119,13 +152,5 @@
         padding: 0;
         margin: 0;
     }
-/* 
-    .qr i {
-        
-        font-size: 1rem;
-        position: absolute;
-        
-        transform: translate(-50%, -50%);
-    } */
 
 </style>

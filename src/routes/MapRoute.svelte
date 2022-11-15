@@ -85,7 +85,7 @@
             style: "mapbox://styles/refrigerator2k/cl9r8ojom002u14nygzeui2gi",
             center: [37.624, 55.834],
             zoom: 14,
-            //maxBounds: [[ 37.624130 - 0.03, 55.833883 - 0.03 ], [ 37.624130 + 0.03, 55.833883 + 0.03 ]]
+            maxBounds: [[ 37.624130 - 0.05, 55.833883 - 0.05 ], [ 37.624130 + 0.05, 55.833883 + 0.05 ]]
         });
 
 
@@ -214,7 +214,7 @@
 
     function onMapPlaceSelected(feature) {
         map.panTo(feature.geometry.coordinates);
-        console.log(feature);
+        //console.log(feature);
     }
 
     function onMapPlaceDeselected(feature) {
@@ -230,7 +230,7 @@
         }
 
         if (wishes === 0) {
-            wishes = 0xffffffff;
+            //wishes = 0xffffffff;
         }
 
         //if (interests !== 0 || wishes !== 0) {
@@ -241,7 +241,7 @@
                 });
         //}
         //else {
-        //    onReset();
+            //onReset();
         //}
 
     }

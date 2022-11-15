@@ -11,12 +11,11 @@
         Backend.confirmRegistration(params.userId, params.code)
             .then(async (response) => {
                 if (response.ok) {
-                    console.log("Registration confirmed");
                     status = 1;
                 }
                 else {
                     status = 2;
-                    console.log(await response.text());
+                    console.error(await response.text());
                 }
             });
     }

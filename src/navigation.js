@@ -7,5 +7,5 @@ export const Nav = {
     FORGOT_PWD: "/reset-password",
     NEW_PWD: "/reset_password",
     EXPLORE: "/explore",
-    JOIN_GROUP: "/join_to_group"
+    JOIN_GROUP: "/join-group"
 };

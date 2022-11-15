@@ -1,14 +1,86 @@
-//const _mapBackHost = "http://37.18.121.45:3000";
-const _mapBackHost = "http://127.0.0.1:3000";
+const _mapBackHost = "http://37.18.121.45:3000";
+//const _mapBackHost = "http://127.0.0.1:3000";
+//const _hostUrl = "http://25.56.101.230:5173";
 //const _hostUrl = "http://192.168.0.100:5173";
-const _hostUrl = "http://192.168.0.100:5173";
+const _hostUrl = "http://37.18.121.45";
 
+
+export const GroupRole = {
+    NO_ROLE: 0,
+    ADMIN: 1,
+    MEMBER: 2
+};
 
 let _accessToken = "";
 let _refreshToken = "";
 let _userId = "";
 let _groupId = "";
-let _groupRole = "";
+let _groupRole = GroupRole.NO_ROLE;
+let _groupMembers = []
+
+function _setAccessToken(token, modify = true, expires) {
+    if (token) {
+        _accessToken = token;
+        if (modify)
+            setCookie("accessToken", _accessToken, { expires: expires })
+    }
+    else {
+        _accessToken = "";
+        if (modify)
+            deleteCookie("accessToken");
+    }
+}
+
+function _loadRefreshToken() {
+    return localStorage.getItem("refreshToken");
+}
+
+function _setRefreshToken(token, modify = true, expires = undefined) {
+    if (token) {
+        _refreshToken = token;
+        if (modify)
+            localStorage.setItem("refreshToken", _refreshToken);
+    }
+    else {
+        _refreshToken = "";
+        if (modify) 
+            localStorage.removeItem("refreshToken")
+    }
+}
+
+function _setGroupRoleStr(role) {
+    if (role) {
+        if (role === "group_admin") {
+            _groupRole = GroupRole.ADMIN;
+        }
+        else if (role === "group_member") {
+            _groupRole = GroupRole.MEMBER;
+        }
+        else {
+            _groupRole = GroupRole.NO_ROLE;
+        }
+    }
+    else {
+        _groupRole = GroupRole.NO_ROLE;
+    }
+}
+
+function _setUserId(id, modify = true, expires) {
+    if (id) {
+        _userId = id;
+        if (modify)
+            setCookie("userId", _userId, { expires });
+    }
+    else {
+        _userId = "";
+        if (modify)
+            deleteCookie("userId");
+    }
+}
+
+function _setGroupId(role) {
+    _groupId = role ? role : "";
+}
 
 function _buildUrl(path) {
     return `http://37.18.121.45:7269${path}`;
@@ -101,20 +173,19 @@ function deleteCookie(cookieName) {
 
 export const Backend = {
     init: async () => {
-        _accessToken = getCookie("accessToken");
-        _refreshToken = getCookie("refreshToken");
-        _userId = getCookie("userId");
+        _setAccessToken(getCookie("accessToken"), false);
+        _setRefreshToken(_loadRefreshToken(), false);
+        _setUserId(getCookie("userId"), false);
 
-        const res = await Backend.getUserDetails();
-        const json = await res.json();
-        _groupId = json.groupId;
-        if (!_groupId) {
-            _groupId = "";
-        }
-        _groupRole = json.groupRole;
-        if (!_groupRole) {
-            _groupRole = "";
-        }
+        if (Backend.isSignedIn()) {
+            const res = await Backend.getUserDetails();
+            const json = await res.json();
+            /* console.log("user details");
+            console.log(json); */
+            _setGroupId(json.groupId);
+            _setGroupRoleStr(json.groupRole);
+            /* console.log(_groupRole); */
+        } 
     },
 
     signIn: async (login, password, rememberMe) => {
@@ -125,30 +196,18 @@ export const Backend = {
         });
 
         const json = await response.json();
-        console.log("signin");
-        console.log(json);
+        /* console.log("signin");
+        console.log(json); */
 
         if (!response.ok) {
             return false;
         }
 
-        _accessToken = json.accessToken;
-        _userId = json.userId;
+        _setAccessToken(json.accessToken, true, json.expires);
+        _setRefreshToken(json.refreshToken, true, json.refreshTokenExpires);
+        _setUserId(json.userId, true, json.expires);
 
-        setCookie("accessToken", `${_accessToken}`, { expires: new Date(json.expires) });
-        setCookie("userId", _userId, { expires: new Date(json.expires) });
-
-        if (rememberMe && json.refreshToken) {
-            setCookie("refreshToken", json.refreshToken, { expires: new Date(json.expires) });
-        }
-
-        
-        const detailsRes = await Backend.getUserDetails();
-        const detailsJson = await detailsRes.json();
-        console.log("details");
-        console.log(detailsJson);
-
-        _groupId = detailsJson.groupId;
+        Backend.init();
 
         return true;
     },
@@ -170,13 +229,11 @@ export const Backend = {
     },
 
     signOut: async () => {
-        deleteCookie("accessToken");
-        deleteCookie("refreshToken");
-        deleteCookie("userId");
-        _accessToken = "";
-        _refreshToken = "";
-        _userId = "";
-        _groupId = "";
+        _setAccessToken();
+        _setRefreshToken();
+        _setUserId();
+        _setGroupId();
+        _setGroupRoleStr();
     },
 
     refreshToken: async () => {
@@ -196,6 +253,11 @@ export const Backend = {
         return await _post(`/api/User/add_user_details/${_userId}`, {
             firstname, lastname, age
         })
+    },
+
+    getUserDetails: async (userId = _userId) => {
+        console.log("Getting user details for '%s'", userId);
+        return await _get(`/api/user/user_details/${userId}`);
     },
 
     resetPassword: async (login) => {
@@ -223,7 +285,8 @@ export const Backend = {
         };
 
         if (res.ok) {
-            _groupId = json.groupId;
+            _setGroupId(json.groupId);
+            _setGroupRoleStr("group_admin");
             result = { ...result, qrLink: json.qrLink }
         }
         else {
@@ -233,28 +296,59 @@ export const Backend = {
         return result;
     },
 
-    joinGroup: async () => {
+    joinGroup: async (groupId) => {
         return await _post("/api/Group/join_group", {
             userId: _userId, 
-            groupId: _groupId
+            groupId: groupId
         })
     },
 
     hasGroupId: () => _groupId.length > 0,
 
-    isThisUserGroupAdmin: () => _groupRole === "group_admin",
+    getGroupRole: () => _groupRole,
 
+    getGroupMembers: async () => {
+        if (_groupMembers.length <= 0) {
+            const res = await Backend.getGroupDetails()
+            if (!res.ok) {
+                return { ok: false };
+            }
+
+            const json = await res.json();
+            const membersIds = json.members;
+            let groupMembers = []
+            for (let i = 0; i < membersIds.length; ++i) {
+                const userId = membersIds[i];
+                const res1 = await Backend.getUserDetails(userId)
+                const json1 = await res1.json();
+                const name = json1.fullName;
+                console.log("User name: '%s'", name);
+                groupMembers.push(name);
+            }
+
+            _groupMembers = groupMembers;
+        }
+
+        return {
+            ok: true,
+            members: _groupMembers
+        };
+    },
+    
     deleteGroup: async () => {
-        console.log(_groupId);
-        return await _delete(`/api/group/delete_group/${_groupId}`);
+        const res = await _delete(`/api/group/delete_group/${_groupId}`);
+        if (res.ok) {
+            _setGroupId();
+            _setGroupRoleStr();
+            return { ok: res.ok }
+        }
+
+        _groupMembers = [];
+        return { ok: false };
     },
 
     getGroupDetails: async () => {
         return await _get(`/api/group/group_details/${_groupId}`);
-    },
-
-    getUserDetails: async () => {
-        return await _get(`/api/user/user_details/${_userId}`);
     },
 
     getMapPoints: async () => {

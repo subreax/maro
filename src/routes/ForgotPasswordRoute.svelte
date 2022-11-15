@@ -20,8 +20,8 @@
                     if (response.ok) {
                         isPasswordReset = true;
                     } else {
-                        console.log("Reset password failed");
-                        console.log(response);
+                        console.error("Reset password failed");
+                        console.error(response);
                     }
                 });
         }

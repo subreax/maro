@@ -1,6 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
     import PathTuningComponent from "./PathTuningComponent.svelte";
+    import ToggleButton from "./ToggleButton.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -59,6 +60,7 @@
     }
 
     .title {
+        flex: 1;
         padding: 16px 0; 
         display: block;
         line-height: 1rem;

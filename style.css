@@ -28,7 +28,7 @@ hr {
 button {
     box-sizing: border-box;
     display: inline-block;
-    font-weight: 600;
+    font-weight: 700;
     border: none;
     outline: none;
     color: var(--color-primary);
@@ -147,7 +147,7 @@ button:hover {
 .btn__chip {
     background: #F5F5F5;
     color: #262626;
-    font-weight: 600;
+    font-weight: 700;
     border-radius: 8px;
 }
 
@@ -203,7 +203,7 @@ button:hover {
 .additional-button {
     color: var(--color-primary);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .btn-primary {
@@ -264,7 +264,7 @@ button:hover {
 
 .list-item__title {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     padding-top: 1.5em;
     padding-bottom: 0.5em;
     
@@ -291,6 +291,12 @@ button:hover {
     background: #fff;
     border-radius: 20px;
     overflow-y: auto;
+}
+
+@media screen and (max-width: 850px) {
+    .ptcomponent-content1 {
+        max-height: calc(100vh - 185px - 116px);
+    }
 }
 
 .floating-component-bg {
@@ -361,6 +367,11 @@ button:hover {
 }
 
 
+@media screen and (min-width: 850px) {
+    .hidden-on-pc {
+        display: none;
+    }
+}
 
 
 #map canvas {

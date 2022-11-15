@@ -7,13 +7,15 @@
     import CompanyConfigurer from "./CompanyConfigurer.svelte";
     import DetailedWishesSelector from "./DetailedWishesSelector.svelte";
     import DetailedInterestsSelector from "./DetailedInterestsSelector.svelte";
-    import { Backend } from "../backend";
 
     const dispatch = createEventDispatcher();
 
     export let className = "";
     export let contentClassName = "";
 
+    const minWidth = 850;
+
+    let configVisible = window.innerWidth > minWidth;
 
     let modeSelected = 0;
     let expandedItem = "";
@@ -39,6 +41,9 @@
 
 
     function onApply() {
+        if (window.innerWidth <= minWidth) {
+            configVisible = false;
+        }
         dispatch("apply", { wishes: checkedWishes, interests: checkedInterests });
     }
 
@@ -51,28 +56,28 @@
 </script>
 
 <div class="wrapper {className}">
-    <div class="status-bar">
-        <div class="btn-group">
-            <ToggleButton   style="width: 100%; flex: 1" 
-                            on:toggle={() => modeSelected = 0} 
-                            toggled={modeSelected === 0}
-                            toggleLocked={modeSelected === 0}>
-                Быстрый
-            </ToggleButton>
-
-            <ToggleButton   style="width: 100%; flex: 1" 
-                            on:toggle={() => modeSelected = 1} 
-                            toggled={modeSelected === 1}
-                            toggleLocked={modeSelected === 1}>
-                Расширенный
-            </ToggleButton>
-        </div>
-    </div>
-
-
+    {#if configVisible}
     <div class="expandable-block">
+        <div class="status-bar">
+            <div class="btn-group">
+                <ToggleButton   style="width: 100%; flex: 1" 
+                                on:toggle={() => modeSelected = 0} 
+                                toggled={modeSelected === 0}
+                                toggleLocked={modeSelected === 0}>
+                    Быстрый
+                </ToggleButton>
+    
+                <ToggleButton   style="width: 100%; flex: 1" 
+                                on:toggle={() => modeSelected = 1} 
+                                toggled={modeSelected === 1}
+                                toggleLocked={modeSelected === 1}>
+                    Расширенный
+                </ToggleButton>
+            </div>
+        </div>
+
         <div class="{contentClassName}">
-            <ExpandableItem title="Пожелания"     
+            <ExpandableItem title="Пожелания"
                             itemId="1" 
                             expanded={expandedItem[0] === "1"}
                             on:toggle={onItemToggled} 
@@ -105,13 +110,21 @@
                 <CompanyConfigurer />
             </ExpandableItem>
         </div>
-
-        <div class="buttons">
-            <button on:click|preventDefault={() => onReset()}>Сбросить всё</button>
-            <button class="btn__raised" on:click|preventDefault={() => onApply()}>Применить</button>
-        </div>
     </div>
+    {/if}
     
+    <div class="buttons">
+        <button on:click|preventDefault={onReset}>Сбросить всё</button>
+        <button class="btn__raised" on:click|preventDefault={onApply}>Построить</button>
+
+        <ToggleButton  
+            bind:toggled={configVisible}
+            style="flex: 0;" 
+            className="btn__toggle btn__icon hidden-on-pc"
+            >
+            <i class="fa-solid" class:fa-chevron-down={!configVisible} class:fa-chevron-up={configVisible}></i>
+        </ToggleButton>        
+    </div>
 </div>
 
 
@@ -135,8 +148,14 @@
 
     .buttons {
         display: flex;
-        justify-content: center;
-        gap: 10%;
+        justify-content: space-evenly;
+        gap: 16px;
+    }
+
+    @media screen and (max-width: 850px) {
+        .buttons {
+            justify-content: center;
+        }
     }
 
     .buttons button {

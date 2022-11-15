@@ -13,7 +13,6 @@
     function confirmRegistration() {
         Backend.addUserDetails(firstname, lastname, age)
             .then(() => {
-                console.log("User details have been added");
                 navigate(Nav.MAP, { replace: true });
             })
             .catch(async (response2) => {
